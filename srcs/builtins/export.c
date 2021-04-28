@@ -6,11 +6,44 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/03/07 12:55:49 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/14 16:12:06 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../includes/minishell.h"
+
+static void print_export(void)
+{
+    t_list  *tmp;
+    int     i;
+    
+    i = 0;
+	while (i < g_sh.env->lenght)
+    {
+        tmp = g_sh.env->backets[i];
+        while (tmp)
+        {
+            if (((t_key_value*)tmp->data)->value)
+                printf("declare -x %s=\"%s\"\n", (char*)((t_key_value*)tmp->data)->key,
+                (char*)((t_key_value*)tmp->data)->value);
+            else
+                printf("declare -x %s\n", (char*)((t_key_value*)tmp->data)->key);
+            tmp = tmp->next;
+        }
+        i++;
+    }
+}
+
+static void check_var(char *var, char *arg, int *ret)
+{
+    if (ft_isdigit(var[0]) || ft_isstrnchr(var, " |!;&$@\\'\"") || ft_is_empty(var))
+    {
+        ft_putstr_fd("minishell: export: `", 2);
+        ft_putstr_fd(arg, 2);
+        ft_putendl_fd("': not a valid identifier", 2);
+        *ret = 1;
+    }
+}
 
 int	builtins_export(char **arg)
 {
@@ -25,94 +58,37 @@ int	builtins_export(char **arg)
 	tmp = NULL;
 	n = 0;
 	ret = 0;
-	if (ft_size_arg(arg) == 1)
-	{
-		i = 0;
-		while (g_sh.env[i])
-		{
-			if (ft_strncmp(g_sh.env[i], "_=", 2))
-			{
-				n = ft_strchrn(g_sh.env[i], '=');
-				ft_putstr_fd("declare -x ", 1);
-				if (n)
-				{
-					var = ft_strndup(g_sh.env[i], n + 1);
-					ft_putstr_fd(var , 1);
-					ft_putstr_fd("\"", 1);
-					ft_putstr_fd(g_sh.env[i] + n + 1, 1);
-					ft_putendl_fd("\"", 1);
-				}
-				else
-				{
-					var = ft_strdup(g_sh.env[i]);
-					ft_putendl_fd(var , 1);
-				}
-				free(var);
-			}
-			i++;
-		}
-	}
+	if (ft_argsize(arg) == 1)
+        print_export();
 	i = 1;
-	n = 0;
-	while (arg[i])
-	{
-		n = ft_strchrn(arg[i], '+');
-		if (arg[i][0] == '=')
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(arg[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			return 1;
-		}
-		else if (n && n < ft_strchrn(arg[i], '=') && arg[i][n + 1]  != '=')
-		{
-			ft_putstr_fd("minishell: export: `",2);
-			ft_putstr_fd(arg[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			return (1);
-		}
-		n = ft_strchrn(arg[i], '=');
-		if (arg[i][n - 1 < 0 ? n : n - 1] == '+')
-		{
-			var = ft_strndup(arg[i], n - 1);
-			val = ft_getenv(var);
-		}
-		else if (n)
-			var = ft_strndup(arg[i], n);
-		else
-			var = ft_strdup(arg[i]);
-		if (ft_isdigit(var[0]) || ft_isstrnchr(var, " |!;&$@\\'\"") || ft_is_empty(var))
+    while (arg[i])
+    {
+        n = ft_strchrn(arg[i], '+');
+        if (arg[i][0] == '=' || (n && n < ft_strchrn(arg[i], '=') && arg[i][n + 1]  != '='))
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(arg[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
 			ret = 1;
 		}
-		if (!n && !ft_isstrnchr(var, " |!;&$@\\'\""))
-			ft_envadd(ft_strdup(arg[i]));
+        n = ft_strchrn(arg[i], '=');
+        if (arg[i][ternary(n - 1 < 0, n, n - 1)] == '+')
+        {
+            var = ft_strndup(arg[i], n - 1);
+            val = ft_getenv(var);
+        }
+        else if (n)
+            var = ft_strndup(arg[i], n);
+        else
+            var = ft_strdup(arg[i]);
+        val = ft_strjoin(val, arg[i] + n + 1);
+        check_var(var, arg[i], &ret);
+        if (!n && !ft_isstrnchr(var, " |!;&$@\\'\""))
+            insert_to_table(g_sh.env, var, NULL, ft_strlen(var));
 		else if (!ft_isstrnchr(var, " |!;&$@\\'\""))
-		{
-			tmp = val;
-			val = ft_strjoin(val, arg[i] + n + 1);
-			free(tmp);
-			tmp = arg[i];
-			arg[i] = ft_strjoin(var, "=");
-			free(tmp);
-			tmp = arg[i];
-			arg[i] = ft_strjoin(arg[i], val);
-			free(tmp);
-			if (ft_checkenv(var))
-			{
-				ft_envremove(var);
-				ft_envadd(ft_strdup(arg[i]));
-			}
-			else if (var && arg[i][0] != '$')
-				ft_envadd(ft_strdup(arg[i]));
-		}
-		i++;
-		free(val);
-		free(var);
+            ht_add(g_sh.env, var, val, ft_strlen(var), free);
+        i++;
 		val = NULL;
-	}
+    }
 	return (ret);
 }

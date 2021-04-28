@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:38:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/12 17:38:35 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/28 17:27:17 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 	{
 		temp = ft_lstlast(temp);
 		(temp)->next = new;
+		new->prev = temp;
 	}
 	else
 		*alst = new;
@@ -29,6 +30,11 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 void	ft_lstadd_front(t_list **alst, t_list *new)
 {
 	new->next = *alst;
+	if (*alst)
+	{
+		new->next->prev = new;
+		ft_putendl_fd("hi", 2);
+	}
 	*alst = new;
 }
 
@@ -104,6 +110,7 @@ t_list	*ft_lstnew(void *data)
 		return (NULL);
 	new->data = data;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -127,7 +134,7 @@ void	ft_lstprint(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("%s\n", tmp->data);
+		printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data, ft_strlen(tmp->data)));
 		tmp = tmp->next;
 	}
 }

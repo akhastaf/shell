@@ -1,9 +1,27 @@
 #ifndef STRUCT_H
 # define STRUCT_H
-
+# include <stdlib.h>
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
 # define BUILTINS_NUM 7
+# define UP 4283163
+# define DOWN 4348699
+# define DELETE 127
+
 
 typedef int fun_ptr(char **);
+
+
+typedef struct s_tc
+{
+	char			*name;
+	struct termios	term;
+	struct termios	init;
+	char			*cm;
+	char			*ce;
+	char			*dl;
+}				t_tc;
 
 typedef struct		s_list
 {
@@ -34,7 +52,7 @@ typedef struct s_red
 }	t_red;
 
 
-typedef struct  s_pipeline
+typedef struct  s_cmd
 {
 	char	*path;
 	char	**arg;
@@ -43,7 +61,13 @@ typedef struct  s_pipeline
 	int		fdin;
 	int		fdout;
 	int		pipe[2];
-}		t_pipeline;
+}		t_cmd;
+
+typedef struct s_pipeline
+{
+	char	*str;
+	t_list *cmd;
+}	t_pipeline;
 
 
 typedef struct s_sh
@@ -51,14 +75,15 @@ typedef struct s_sh
 	t_list	*pipeline;
 	t_hash_table *env;
 	t_hash_table *builtins;
-	// fun_ptr *builtins_fun[BUILTINS_NUM];
-    // char    *builtins_str[BUILTINS_NUM];
-	char	*line;
-	t_list	*history;
-	int		status;
-	int		in;
-	int		out;
-	char	*errors;
-	char	*home;
-}		t_sh;
+	char		*line;
+	char		*tmp_line;
+	t_tc		tc;
+	t_list		*hist;
+	t_list		*tmp_hist;
+	long long	status;
+	int			in;
+	int			out;
+	char		**errors;
+	char		*home;
+}				t_sh;
 #endif

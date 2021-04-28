@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 
-int     ft_size_arg(char **arg)
+int     ft_argsize(char **arg)
 {
     int i;
 

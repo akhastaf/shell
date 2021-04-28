@@ -154,3 +154,56 @@ void    print_ht(t_hash_table *ht)
         i++;
     }
 }
+
+
+void    ht_replace(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void*))
+{
+    t_key_value *key_val;
+    char *tmp;
+
+    key_val = get_key_value(ht, k, size);
+    if (key_val)
+    {
+        tmp = key_val->value;
+        del(key_val->value);
+        key_val->value = v;
+    }
+    else
+        insert_to_table(ht, k, v, size);
+}
+
+void    ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
+{
+    unsigned int id;
+    t_list *tmp;
+    t_list *p;
+
+    id = hash_code(k, size, ht->lenght);
+    tmp = ht->backets[id];
+    p = tmp;
+    while (tmp)
+    {
+        if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
+        {
+            del(((t_key_value *)tmp->data)->key);
+            del(((t_key_value *)tmp->data)->value);
+            p->next = tmp->next;
+            ft_lstdelone(tmp, del);
+            tmp = NULL;
+            break;
+        }
+        p = tmp;
+        tmp = tmp->next;
+    }
+}
+
+void    ht_add(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void*))
+{
+    if (get_value(ht, k, size))
+    {
+        ht_replace(ht, k, v,size, del);
+        free(k);
+    }
+    else
+        insert_to_table(ht, k, v, size);
+}

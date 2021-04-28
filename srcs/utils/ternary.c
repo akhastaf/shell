@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ternary.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 12:41:09 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/13 16:53:26 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/04/13 17:16:40 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/04/13 17:37:41 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-int	builtins_pwd(char **arg)
+int	ternary(int condition, int ret1, int ret2)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		pwd = ft_getenv("PWD");
-	ft_putendl_fd(pwd, 1);
-	free(pwd);
-	return (0);
+	if (condition)
+		return (ret1);
+	else
+		return (ret2);
 }
