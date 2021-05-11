@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:21:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/28 17:48:56 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/09 16:40:45 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    init_pipeline(void)
     p = NULL;
     if (g_sh.line)
     {
-        pipeline = ft_split(g_sh.line, ';');
+        pipeline = ft_split(g_sh.line, ";");
         i = 0;
         while (pipeline[i])
         {
@@ -42,18 +42,23 @@ void    process_pipeline(t_pipeline *p)
     int     i;
     
     p->str = ft_refactor_line(p->str);
-    cmds = ft_split(p->str, '|');
+    cmds = ft_split(p->str, "|");
     i = 0;
+    p->cmd = NULL;
     while (cmds[i])
     {
         cmd = malloc(sizeof(t_cmd));
         cmd->red = get_redirection(cmds[i]);
         cmds[i] = remove_red(cmds[i]);
-        arg = ft_split(cmds[i], ' ');
+        arg = ft_split(cmds[i], " ");
         cmd->path = ft_getpath(ft_strremove(ft_strremove(ft_strdup(arg[0]), '\''), '"'));
+        cmd->path = ft_putbackslash(cmd->path);
+        ft_argmap(&arg, ft_putbackslash);
         cmd->arg = arg;
         cmd->fdin = 0;
         cmd->fdout = 0;
+        cmd->pipe[0] = -1;
+        cmd->pipe[1] = -1;
         ft_lstadd_back(&(p->cmd), ft_lstnew(cmd));
         i++;
     }

@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   ft_argmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 12:47:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/10 13:10:03 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/09 16:30:34 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/09 16:40:11 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	builtins_unset(char **arg)
+void    ft_argmap(char ***arg, char *(*map)(char *))
 {
-	int	i;
-	int	ret;
+    int i;
 
-	i = 1;
-	ret = 0;
-	while (arg[i])
-	{
-		if (ft_strchr(arg[i], ' ') || ft_strchr(arg[i], '=')
-			|| ft_is_empty(arg[i]))
-		{
-			printf("minishell: unset: `%s': not a valid identifier", arg[i]);
-			ret = 1;
-		}
-		ht_delone(g_sh.env, arg[i], ft_strlen(arg[i]), free);
-		i++;
-	}
-	return (ret);
+    i = 0;
+    while ((*arg)[i])
+    {
+        (*arg)[i] = map((*arg)[i]);
+        (*arg)[i] = ft_strremove((*arg)[i], '\'');
+        (*arg)[i] = ft_strremove((*arg)[i], '"');
+        (*arg)[i] = ft_strremove((*arg)[i], '\\');
+        i++;
+    }
 }

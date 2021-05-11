@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:34:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/18 13:10:39 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/29 16:41:32 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char *ft_getpath(char *file)
         free(pathenv);
         return (file);
     }
-    path = ft_split(pathenv, ':');
+    path = ft_split(pathenv, ":");
     free(pathenv);
     while (path[i])
     {
@@ -46,7 +46,5 @@ char *ft_getpath(char *file)
         i++;
     }
     ft_delete_arg(path);
-    if (file)
-        free(file);
-    return (ft_strdup(file));
+    return (file);
 }

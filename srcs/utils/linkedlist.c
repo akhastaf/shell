@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:38:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/28 17:27:17 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/04 15:09:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,23 @@ void	ft_lstadd_front(t_list **alst, t_list *new)
 {
 	new->next = *alst;
 	if (*alst)
-	{
 		new->next->prev = new;
-		ft_putendl_fd("hi", 2);
-	}
 	*alst = new;
 }
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*tmp;
+	t_list	*next;
 
 	tmp = *lst;
 	if (lst && del)
 	{
 		while (tmp)
 		{
+			next = tmp->next;
 			ft_lstdelone(tmp, del);
-			tmp = tmp->next;
+			tmp =next;
 		}
 		*lst = NULL;
 	}
@@ -56,11 +55,10 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	if (lst && del)
-	{
+	if (del)
 		del(lst->data);
+	if (lst)
 		free(lst);
-	}
 }
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
@@ -134,7 +132,8 @@ void	ft_lstprint(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data, ft_strlen(tmp->data)));
+		if (tmp->data)
+			printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data, ft_strlen(tmp->data)));
 		tmp = tmp->next;
 	}
 }

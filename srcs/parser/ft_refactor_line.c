@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/19 17:21:51 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/06 16:18:04 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ char    *ft_refactor_line(char *s)
         i++;
     }
     free(s);
+    if (!line)
+        return ft_strdup("");
     return line;
 }

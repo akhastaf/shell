@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:09 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/14 16:15:25 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/10 13:02:33 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char        *get_oldpwd()
     char *oldpwd;
     oldpwd = ft_getenv("OLDPWD");
     if (!oldpwd)
-        ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+        ft_putendl_fd("minishell: cd: OLDPWD not set", 1);
     return oldpwd;
 }
 
@@ -30,7 +30,7 @@ static int     missing_arg(char *arg, char **str, char **oldpwd)
     {
         if (!(*str = ft_getenv("HOME")))
         {
-            ft_putendl_fd("minishell: cd: HOME not set", 2);
+            ft_putendl_fd("minishell: cd: HOME not set", 1);
             return 1;
         }
     }
@@ -52,7 +52,7 @@ static int  get_home(char **str)
             ft_putendl_fd(*str, 1);
         else
         {
-            ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+            ft_putendl_fd("minishell: cd: OLDPWD not set", 1);
             return 1;
         }
     }
@@ -75,9 +75,7 @@ int     builtins_cd(char **arg)
     {
         if (!(pwd = getcwd(NULL, 0)))
         {
-            ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot\
-            access parent directories: ", 2);
-            ft_putendl_fd(strerror(errno), 2);
+            printf("cd: error retrieving current directory: getcwd: cannot access parent directories: %s\n", strerror(errno));
             pwd = ft_getenv("PWD");
             pwd = ft_strappend(pwd, '/');
             tmp = pwd;
@@ -90,10 +88,7 @@ int     builtins_cd(char **arg)
     }
     else
     {
-        ft_putstr_fd("minishell: cd: ", 2);
-        ft_putstr_fd(str, 2);
-        ft_putstr_fd(": ", 2);
-        ft_putendl_fd(strerror(errno), 2);
+        printf("minishell: cd: %s : %s\n", str, strerror(errno));
         if (!arg[1])
             free(str);
         return 1;

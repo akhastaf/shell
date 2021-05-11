@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 11:17:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/28 17:21:39 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/10 13:41:46 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int     main(int ac, char **av, char **env)
 {
 	init_sh(env);
+	// ft_argprint(ht_totable(g_sh.env));
 	minishell_loop();
 	return g_sh.status;
 }
@@ -27,8 +28,8 @@ void	init_sh(char **env)
 	ft_set_pwd();
 	g_sh.in = dup(0);
 	g_sh.out = dup(1);
-	ht_delone(g_sh.env, "OLDPWD", 6, free);
-	increment_shlvl();
+	ht_delone(g_sh.env, "LESS", 4, free);
+	//increment_shlvl();
 }
 void    init_env(char **env)
 {
@@ -50,6 +51,7 @@ void    init_env(char **env)
         i++;
     }
 	insert_to_table(g_sh.env, ft_strdup("A"), ft_strdup("ls -al"), 1);
+	insert_to_table(g_sh.env, ft_strdup("B"), ft_strdup("f1\\ 2"), 1);
 }
 
 void    init_builtins(void)
@@ -129,11 +131,11 @@ void	increment_shlvl(void)
 		value = -1;
 	if (value >= 200000)
 	{
-		ft_putstr_fd("minishell: warning: shell level (", 2);
+		ft_putstr_fd("minishell: warning: shell level (", 1);
 		v = ft_itoa(value + 1); 
-		ft_putstr_fd(v, 2);
+		ft_putstr_fd(v, 1);
 		free(v);
-		ft_putendl_fd(") too high, resetting to 1", 2);
+		ft_putendl_fd(") too high, resetting to 1", 1);
 		value = 0;
 	}
 	else if (value < 0)

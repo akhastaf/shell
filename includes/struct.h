@@ -80,10 +80,12 @@ typedef struct s_sh
 	t_tc		tc;
 	t_list		*hist;
 	t_list		*tmp_hist;
-	long long	status;
+	int			status;
 	int			in;
 	int			out;
 	char		**errors;
 	char		*home;
+	int			error;
+	int			pid;
 }				t_sh;
 #endif

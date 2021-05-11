@@ -60,8 +60,10 @@ void     *get_value(t_hash_table *ht, void *key, size_t size)
     tmp = ht->backets[id];
     while (tmp)
     {
-        if (!ft_memcmp(key, ((t_key_value *)tmp->data)->key, size))
+        if (!ft_memcmp(key, ((t_key_value *)tmp->data)->key, size) && ((t_key_value *)tmp->data)->value)
+        {
             return ((t_key_value *)tmp->data)->value;
+        }
         tmp = tmp->next;
     }
     return NULL;
@@ -97,7 +99,7 @@ t_list          *get_keys(t_hash_table *ht)
     while (i < ht->lenght)
     {
         tmp = ht->backets[i];
-        while (tmp)
+        while (tmp && ((t_key_value*)tmp->data)->key)
         {
             tmp1 = ft_lstnew(((t_key_value*)tmp->data)->key);
             ft_lstadd_back(&new, tmp1);
@@ -121,7 +123,7 @@ t_list          *get_values(t_hash_table *ht)
     while (i < ht->lenght)
     {
         tmp = ht->backets[i];
-        while (tmp)
+        while (tmp && ((t_key_value*)tmp->data)->value)
         {
             tmp1 = ft_lstnew(((t_key_value*)tmp->data)->value);
             ft_lstadd_back(&new, tmp1);
@@ -180,20 +182,31 @@ void    ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
 
     id = hash_code(k, size, ht->lenght);
     tmp = ht->backets[id];
-    p = tmp;
-    while (tmp)
+    if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
     {
-        if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
-        {
-            del(((t_key_value *)tmp->data)->key);
-            del(((t_key_value *)tmp->data)->value);
-            p->next = tmp->next;
-            ft_lstdelone(tmp, del);
-            tmp = NULL;
-            break;
-        }
+        ht->backets[id] = tmp->next;
+        del(((t_key_value *)tmp->data)->key);
+        del(((t_key_value *)tmp->data)->value);
+        ft_lstdelone(tmp, del);
+        return ;
+    }
+    else
+    {
         p = tmp;
-        tmp = tmp->next;
+        while (tmp)
+        {
+            if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
+            {
+                p->next = tmp->next;
+                del(((t_key_value *)tmp->data)->key);
+                del(((t_key_value *)tmp->data)->value);
+                ft_lstdelone(tmp, del);
+                tmp = NULL;
+                break;
+            }
+            p = tmp;
+            tmp = tmp->next;
+        }
     }
 }
 
@@ -206,4 +219,53 @@ void    ht_add(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void
     }
     else
         insert_to_table(ht, k, v, size);
+}
+
+int     count_table(t_hash_table *ht)
+{
+    t_list *tmp;
+    int i;
+    int j;
+    
+    i = 0;
+    j = 0;
+    while (i < ht->lenght)
+    {
+        tmp = ht->backets[i];
+        while (tmp)
+        {
+            j++;
+            tmp = tmp->next;
+        }
+        i++;
+    }
+    return j;
+}
+char    **ht_totable(t_hash_table *ht)
+{
+    int len;
+    int i;
+    char **t;
+    t_list *tmp1;
+    t_list *tmp2;
+
+    tmp1 = get_keys(ht);
+    tmp2 = get_values(ht);
+    len = ft_lstsize(tmp1);
+    t = malloc(sizeof(char*) * (len + 1));
+    i = 0;
+    while (i < len)
+    {
+        if (tmp1->data && tmp2->data)
+        {
+            t[i] = ft_strdup(tmp1->data);
+            t[i] = ft_strappend(t[i], '=');
+            t[i] = ft_strjoin(t[i], ft_strdup(tmp2->data));
+            i++;
+        }
+        tmp1 = tmp1->next;
+        tmp2 = tmp2->next;
+    }
+    t[i] = NULL;
+    return t;
 }

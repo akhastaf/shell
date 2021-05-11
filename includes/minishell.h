@@ -33,15 +33,18 @@ int     excute();
 void    init_pipeline(void);
 void    process_pipeline(t_pipeline *p);
 char    *ft_refactor_line(char *s);
-
+char    *ft_putbackslash(char *s);
+char	*ft_strremove(char *s, char c);
 
 // MINISHELL
 void    minishell_loop(void);
 
 // REDIRECTIONS
+void    setup_redirection(t_cmd *cmd);
 t_list   *get_redirection(char *cmd);
 char    *remove_red(char *cmd);
 char    *ft_getword(char *word, char *set);
+int    get_option(t_red *red);
 
 // UTILS
 void    print_pipeline(void);
@@ -77,6 +80,10 @@ void	backedup_line(void);
 void	down_hist(void);
 
 // PIPE
+void    setup_pipe(t_list *cmd);
+void    reset_std();
+void    close_pipe(t_pipeline *p);
+void    open_pipes(t_pipeline *p);
 void    delete_pipe(void *p);
 void    delete_cmd(void *cmd);
 void    delete_red(void *red);

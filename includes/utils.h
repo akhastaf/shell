@@ -31,7 +31,7 @@ void    ht_replace(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(
 void            ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*));
 void            ht_add(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void*));
 void            print_ht(t_hash_table *ht);
-
+char    **ht_totable(t_hash_table *ht);
 
 
 //UTILS
@@ -58,9 +58,8 @@ int     ft_is_space(char c);
 char			*ft_itoa(int n);
 int     ft_strchrn(char *s, char c);
 char    **ft_argtrim(char **arg, char *set);
-char				**ft_split(char const *s, char c);
-// char				**ft_split(char const *s, char *set);
-char	*ft_strremove(char *s, char c);
+// char				**ft_split(char const *s, char c);
+char				**ft_split(char const *s, char *set);
 int     ft_countcahr(char *s, char c);
 int     ft_strnchrn(char *s, char *set);
 int		is_specialcar(char c);
@@ -82,4 +81,5 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void    ft_puterror(char *f, char *ar, char *l);
 void    ft_argprint(char **arg);
 int	ternary(int condition, int ret1, int ret2);
+void    ft_argmap(char ***arg, char *(*map)(char *));
 #endif

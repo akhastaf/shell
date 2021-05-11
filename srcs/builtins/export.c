@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/14 16:12:06 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:58:04 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ static void check_var(char *var, char *arg, int *ret)
 {
     if (ft_isdigit(var[0]) || ft_isstrnchr(var, " |!;&$@\\'\"") || ft_is_empty(var))
     {
-        ft_putstr_fd("minishell: export: `", 2);
-        ft_putstr_fd(arg, 2);
-        ft_putendl_fd("': not a valid identifier", 2);
+        printf("minishell: export: `%s': not a valid identifier", arg);
         *ret = 1;
     }
 }
@@ -66,9 +64,7 @@ int	builtins_export(char **arg)
         n = ft_strchrn(arg[i], '+');
         if (arg[i][0] == '=' || (n && n < ft_strchrn(arg[i], '=') && arg[i][n + 1]  != '='))
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(arg[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
+            printf("minishell: export: `%s': not a valid identifier", arg[i]);
 			ret = 1;
 		}
         n = ft_strchrn(arg[i], '=');
