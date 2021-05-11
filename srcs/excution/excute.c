@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:24:47 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/11 10:50:36 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/11 11:33:28 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void    magic_box(t_pipeline *p)
         tmp = tmp->next;
     }
     close_pipe(p);
-    //waitpid(g_sh.pid, &g_sh.status, 0);
+    waitpid(g_sh.pid, &g_sh.status, 0);
     while(wait(NULL)>0);
 }
 
