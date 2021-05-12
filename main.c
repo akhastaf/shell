@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 11:17:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/10 13:41:46 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/11 17:19:59 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int     main(int ac, char **av, char **env)
 {
 	init_sh(env);
-	// ft_argprint(ht_totable(g_sh.env));
 	minishell_loop();
 	return g_sh.status;
 }
@@ -28,7 +27,8 @@ void	init_sh(char **env)
 	ft_set_pwd();
 	g_sh.in = dup(0);
 	g_sh.out = dup(1);
-	ht_delone(g_sh.env, "LESS", 4, free);
+	g_sh.status = 0;
+	//ht_delone(g_sh.env, "OLDPWD", 4, free);
 	//increment_shlvl();
 }
 void    init_env(char **env)

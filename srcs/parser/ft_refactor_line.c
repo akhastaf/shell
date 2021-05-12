@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/06 16:18:04 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/11 17:15:15 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char    *ft_refactor_line(char *s)
             var = ft_getword(s + i + 1, "\" |'\\$=,][@");
             if (s[i + 1] == '?')
             {
+                printf("%d\n", g_sh.status);
                 line = ft_strjoin(line, ft_itoa(g_sh.status));
                 i++;
             }

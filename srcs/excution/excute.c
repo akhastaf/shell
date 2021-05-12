@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:24:47 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/11 11:33:28 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/11 17:25:14 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,26 @@ void    magic_box(t_pipeline *p)
             {
                 f = get_value(g_sh.builtins, ((t_cmd*)tmp->data)->path, ft_strlen(((t_cmd*)tmp->data)->path));
                 g_sh.status = f(((t_cmd*)tmp->data)->arg);
+                exit(g_sh.status);
             }
             else
             {
                 if (execve(((t_cmd*)tmp->data)->path, ((t_cmd*)tmp->data)->arg, ht_totable(g_sh.env)))
+                {
                     ft_putendl_fd(strerror(errno), 1);
+                    exit(127);
+                }
             }
         }
         close(((t_cmd*)tmp->data)->pipe[1]);
-        //reset_std();
         tmp = tmp->next;
     }
     close_pipe(p);
     waitpid(g_sh.pid, &g_sh.status, 0);
+    if (WIFSIGNALED(g_sh.status))
+        g_sh.status = 128 + WTERMSIG(g_sh.status);
+    else
+        g_sh.status = WEXITSTATUS(g_sh.status);
     while(wait(NULL)>0);
 }
 
@@ -97,8 +104,6 @@ int     excute()
         open_pipes(((t_pipeline*)tmp->data));
         magic_box(tmp->data);
         reset_std();
-        //close_pipe((t_pipeline*)(tmp->data));
-        //waitpid(-1, &g_sh.status, 0);
         tmp = tmp->next;
     }
     
@@ -108,5 +113,4 @@ int     warp_excute(t_pipeline *p)
 {
     process_pipeline(p);
     return 0;
-    
 }

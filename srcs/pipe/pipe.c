@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:08:40 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/11 11:27:59 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/11 16:37:37 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void    setup_pipe(t_list *cmd)
 {
-    //printf("%s\t\t%d\t\t%d\n", ((t_cmd*)cmd->data)->path, ((t_cmd*)cmd->data)->pipe[0], ((t_cmd*)cmd->data)->pipe[1]);
     if (cmd->next)
     {
         dup2(((t_cmd*)cmd->data)->pipe[1], 1);
@@ -25,6 +24,7 @@ void    setup_pipe(t_list *cmd)
     {
         dup2(((t_cmd*)cmd->prev->data)->pipe[0], 0);
         close(((t_cmd*)cmd->prev->data)->pipe[0]);
+        close(((t_cmd*)cmd->prev->data)->pipe[1]);
     }
 }
 
