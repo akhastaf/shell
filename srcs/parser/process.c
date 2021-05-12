@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:21:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/09 16:40:45 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/12 14:06:25 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void    process_pipeline(t_pipeline *p)
         cmd->red = get_redirection(cmds[i]);
         cmds[i] = remove_red(cmds[i]);
         arg = ft_split(cmds[i], " ");
-        cmd->path = ft_getpath(ft_strremove(ft_strremove(ft_strdup(arg[0]), '\''), '"'));
-        cmd->path = ft_putbackslash(cmd->path);
+        cmd->path = ft_getpath(ft_strremove(ft_strremove(ft_strremove(ft_putbackslash(ft_strdup(arg[0])), '\''), '"'), '\\'));
         ft_argmap(&arg, ft_putbackslash);
         cmd->arg = arg;
         cmd->fdin = 0;
