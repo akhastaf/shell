@@ -56,7 +56,6 @@ typedef struct  s_cmd
 {
 	char	*path;
 	char	**arg;
-	char	*opr;
 	t_list	*red;
 	int		fdin;
 	int		fdout;
@@ -87,5 +86,6 @@ typedef struct s_sh
 	char		*home;
 	int			error;
 	int			pid;
+	int			is_pipe;
 }				t_sh;
 #endif

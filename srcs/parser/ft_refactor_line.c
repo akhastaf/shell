@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/11 17:15:15 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/21 15:27:41 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@ static char    *ft_tilde(char *s, char *line, int i)
     char *tmp;
     char *tmp1;
 
-    if (s[i + 1] == '+' && ft_getenv("PWD") && (ft_is_space(s[i+ 2]) || s[i+2]==0))
+    if (s[i + 1] == '+' && ft_checkenv("PWD") && (ft_is_space(s[i+ 2]) || s[i+2]==0))
     {
         tmp = ft_getenv("PWD");
         tmp1 = ft_strjoin(line, tmp);
         free(tmp);
         return tmp1;
     }
-    else if (s[i + 1] == '-' && ft_getpath("OLDPWD")  && (ft_is_space(s[i+ 2]) || s[i+2]==0))
+    else if (s[i + 1] == '-' && ft_checkenv("OLDPWD")  && (ft_is_space(s[i+ 2]) || s[i+2]==0))
     {
         tmp = ft_getenv("OLDPWD");
         tmp1 = ft_strjoin(line, tmp);
         free(tmp);
         return tmp1;
     }
-    // else if (s[i + 1] == '+' || s[i + 1] == '-')
-    // {
-    //         line = ft_strappend(line, '~');
-    //         line = ft_strappend(line, s[i+1]);
-    // }
+    else if (s[i + 1] == '+' || s[i + 1] == '-')
+    {
+            line = ft_strappend(line, '~');
+            line = ft_strappend(line, s[i+1]);
+    }
     else
     {
-        if (ft_getenv("HOME"))
+        if (ft_checkenv("HOME"))
         {
             tmp = ft_getenv("HOME");
             tmp1 = ft_strjoin(line, tmp);
@@ -53,17 +53,30 @@ static char    *ft_tilde(char *s, char *line, int i)
 
 char    *ft_refactor_line(char *s)
 {
+    char *tmp;
     char *var;
     char *str;
     char *line;
     int i;
     int j;
+    int q;
+    int sq;
 
     line = NULL;
     i = 0;
+    sq = 0;
+    q = 0;
     while (s[i])
     {
-        if (s[i + 1] && s[i] == '\'' && s[(i - 1 < 0 ? 1 : i - 1)] != '\\')
+         if (s[i] == '\'' && !sq && !q)
+            sq = 1;
+        else if (s[i] == '\'' && sq )
+            sq = 0;
+        if (s[i] == '"' && !q && !sq)
+            q = 1;
+        else if (s[i] == '"' && q)
+            q = 0;
+        if (s[i + 1] && s[i] == '\'' && s[(i - 1 < 0 ? 1 : i - 1)] != '\\' && !q)
         {
             line = ft_strappend(line, s[i]);
             i++;
@@ -78,15 +91,19 @@ char    *ft_refactor_line(char *s)
             var = ft_getword(s + i + 1, "\" |'\\$=,][@");
             if (s[i + 1] == '?')
             {
-                printf("%d\n", g_sh.status);
+                tmp = line;
                 line = ft_strjoin(line, ft_itoa(g_sh.status));
+                free(tmp);
                 i++;
             }
             else if (var[0])
             {
                 str = ft_getenv(var);
+                str = ft_keepq(str);
+                tmp = line;
                 line = ft_strjoin(line, str);
                 free(str);
+                free(tmp);
                 i = i + ft_strlen(var);
                 free(var);
             }
@@ -96,7 +113,8 @@ char    *ft_refactor_line(char *s)
         else if (s[i] == '~'  && s[(i - 1 < 0 ? 1 : i - 1)] != '\\')
         {
             line = ft_tilde(s, line, i);
-            // i = (s[i + 1] == '+' ? i + 1 : i) + (s[i + 1] == '-' ? i + 1 : i);
+            if (s[i + 1] == '+' || s[i + 1] == '-')
+                i = i + 1;
         }
         else
             line = ft_strappend(line, s[i]);

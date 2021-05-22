@@ -17,13 +17,14 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *data);
 int		ft_lstsize(t_list *lst);
 void	ft_lstprint(t_list *lst);
+void	sort_list(t_list **lst);
 
 
 // HASHTABLE
 void            init_hashtable(t_hash_table **ht, size_t lenght);
 void            insert_to_table(t_hash_table *ht,void *k,void *v, size_t size);
-void            *get_value(t_hash_table *ht, void *key, size_t size);
-t_key_value     *get_key_value(t_hash_table *ht, void *key, size_t size);
+void            *get_value(t_hash_table *ht, void *key);
+t_key_value     *get_key_value(t_hash_table *ht, void *key);
 t_list          *get_keys(t_hash_table *ht);
 t_list          *get_values(t_hash_table *ht);
 void            clear_hashtable(t_hash_table **ht, void (*del)(void*));

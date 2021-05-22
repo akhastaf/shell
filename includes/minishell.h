@@ -25,15 +25,17 @@ void    init_env(char **env);
 void    init_builtins(void);
 void	init_errors(void);
 void	increment_shlvl(void);
+void	signals(int sig);
 
 // Excutions
 int     warp_excute(t_pipeline *p);
-int     excute();
+void     excute();
 // PROCESSE
 void    init_pipeline(void);
 void    process_pipeline(t_pipeline *p);
 char    *ft_refactor_line(char *s);
 char    *ft_putbackslash(char *s);
+char    *ft_keepq(char *s);
 char	*ft_strremove(char *s, char c);
 
 // MINISHELL
@@ -60,6 +62,7 @@ int     builtins_exit(char **arg);
 
 // ENV
 char    *ft_getenv(char *var);
+int     ft_checkenv(char *var);
 char    *ft_getpath(char *file);
 int     ft_isbuiltins(char *path);
 void	ft_set_pwd(void);
@@ -87,4 +90,15 @@ void    open_pipes(t_pipeline *p);
 void    delete_pipe(void *p);
 void    delete_cmd(void *cmd);
 void    delete_red(void *red);
+
+// ERRORS
+int     count_doubleq(char *str);
+int     count_singleq(char *str);
+int     check_quote();
+int     check_red();
+int     check_pipe();
+char    *check_syntax();
+
+// LAST COMMAND
+void	ft_set_lstcmd(t_list *cmd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:38:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/04 15:09:48 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/20 11:22:16 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,47 @@ void	ft_lstprint(t_list *lst)
 	while (tmp)
 	{
 		if (tmp->data)
-			printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data, ft_strlen(tmp->data)));
+			printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data));
+		tmp = tmp->next;
+	}
+}
+
+void	ft_listprint(t_list *lst)
+{
+	t_list *tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->data)
+			printf("%s\n", tmp->data);
+		tmp = tmp->next;
+	}
+}
+
+void swap(t_list *a, t_list *b)
+{
+    char *temp;
+	temp = a->data;
+    a->data = b->data;
+    b->data = temp;
+}
+
+void	sort_list(t_list **lst)
+{
+	t_list *tmp;
+	t_list *tmp1;
+
+	tmp = *lst;
+	while (tmp)
+	{
+		tmp1 = *lst;
+		while (tmp1)
+		{
+			if (tmp1->next && ft_strcmp(tmp1->data, tmp1->next->data) >= 0)
+				swap(tmp1, tmp1->next);
+			tmp1 = tmp1->next;
+		}
 		tmp = tmp->next;
 	}
 }

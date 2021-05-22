@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/13 16:53:23 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/20 08:50:06 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,13 @@ int	builtins_echo(char **arg)
 {
 	int		n;
 	int		i;
-	int		l;
-	char	*p;
 
 	n = check_dashn(arg, &i);
 	while (arg[++i])
 	{
-		p = ft_strtrim(arg[i], " ");
-		l = -1;
-		while (p[++l])
-		{
-			while (p[l] && (p[l] == ' ' || p[l] == '\t'))
-				l++;
-			if (l - 1 >= 0 && (p[l - 1] == ' ' || p[l - 1] == '\t'))
-				write(1, " ", 1);
-			if (p[l])
-				write(1, p + l, 1);
-		}
+		ft_putstr_fd(arg[i], 1);
 		if (arg[i + 1])
 			ft_putstr_fd(" ", 1);
-		free(p);
 	}
 	if (!n)
 		ft_putstr_fd("\n", 1);

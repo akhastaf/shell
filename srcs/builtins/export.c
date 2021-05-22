@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/10 14:58:04 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:31:57 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 static void print_export(void)
 {
     t_list  *tmp;
-    int     i;
+    t_list  *env;
+    char    *value;
     
-    i = 0;
-	while (i < g_sh.env->lenght)
+    value = NULL;
+    env = get_keys(g_sh.env);
+    sort_list(&env);
+    tmp = env;
+	while (tmp)
     {
-        tmp = g_sh.env->backets[i];
-        while (tmp)
-        {
-            if (((t_key_value*)tmp->data)->value)
-                printf("declare -x %s=\"%s\"\n", (char*)((t_key_value*)tmp->data)->key,
-                (char*)((t_key_value*)tmp->data)->value);
-            else
-                printf("declare -x %s\n", (char*)((t_key_value*)tmp->data)->key);
-            tmp = tmp->next;
-        }
-        i++;
+        if (tmp->data)
+            value = get_value(g_sh.env, tmp->data);
+        if (value)
+              printf("declare -x %s=\"%s\"\n", tmp->data, value);
+        else
+            printf("declare -x %s\n", tmp->data);
+        tmp = tmp->next;
     }
 }
 

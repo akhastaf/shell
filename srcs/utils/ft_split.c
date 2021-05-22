@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 16:36:14 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/29 16:54:55 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/18 09:14:01 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ char				**ft_split(char const *s, char *set)
 	if (!((char*)s))
 		return (NULL);
 	wc = ft_wordscount((char*)s, set);
+	if (!wc)
+		return (NULL);
 	if (!(words = malloc((wc + 1) * sizeof(char*))))
 		return (NULL);
 	while (j < wc && ((char*)s)[i])

@@ -17,14 +17,18 @@ void    init_hashtable(t_hash_table **ht, size_t lenght)
 }
 
 
-unsigned int    hash_code(const void *key, size_t   size, int lenght)
+unsigned int    hash_code(const void *key, int lenght)
 {
     unsigned int code;
     unsigned char *k;
     size_t i;
+    size_t size;
 
     i = 0;
     code = 0;
+    if (!key)
+        return -1;
+    size = ft_strlen(key);
     k = (unsigned char *)key;
     while (i < size)
     {
@@ -44,23 +48,27 @@ void    insert_to_table(t_hash_table *ht,void *k,void *v, size_t size)
     kv->key = k;
     kv->value = v;
     new = ft_lstnew(kv);
-    id = hash_code(k, size, ht->lenght);
+    id = hash_code(k, ht->lenght);
+    if (id == -1)
+        return ;
     if (!ht->backets[id])
         ht->backets[id] = new;
     else
         ft_lstadd_back(&(ht->backets[id]), new);
 }
 
-void     *get_value(t_hash_table *ht, void *key, size_t size)
+void     *get_value(t_hash_table *ht, void *key)
 {
     unsigned int id;
     t_list *tmp;
 
-    id = hash_code(key, size, ht->lenght);
+    id = hash_code(key,ht->lenght);
+    if (id == -1)
+        return NULL;
     tmp = ht->backets[id];
     while (tmp)
     {
-        if (!ft_memcmp(key, ((t_key_value *)tmp->data)->key, size) && ((t_key_value *)tmp->data)->value)
+        if (!ft_strncmp(key, ((t_key_value *)tmp->data)->key, ft_strlen(((t_key_value *)tmp->data)->key)) && ((t_key_value *)tmp->data)->value)
         {
             return ((t_key_value *)tmp->data)->value;
         }
@@ -69,16 +77,18 @@ void     *get_value(t_hash_table *ht, void *key, size_t size)
     return NULL;
 }
 
-t_key_value     *get_key_value(t_hash_table *ht, void *key, size_t size)
+t_key_value     *get_key_value(t_hash_table *ht, void *key)
 {
     unsigned int id;
     t_list *tmp;
 
-    id = hash_code(key, size, ht->lenght);
+    id = hash_code(key, ht->lenght);
+    if (id == -1)
+        return NULL;
     tmp = ht->backets[id];
     while (tmp)
     {
-        if (!ft_memcmp(key, ((t_key_value *)tmp->data)->key, size))
+        if (!ft_strncmp(key, ((t_key_value *)tmp->data)->key, ft_strlen(((t_key_value *)tmp->data)->key)))
             return ((t_key_value *)tmp->data);
         tmp = tmp->next;
     }
@@ -101,7 +111,7 @@ t_list          *get_keys(t_hash_table *ht)
         tmp = ht->backets[i];
         while (tmp && ((t_key_value*)tmp->data)->key)
         {
-            tmp1 = ft_lstnew(((t_key_value*)tmp->data)->key);
+            tmp1 = ft_lstnew(ft_strdup(((t_key_value*)tmp->data)->key));
             ft_lstadd_back(&new, tmp1);
             tmp = tmp->next;
         }
@@ -163,12 +173,13 @@ void    ht_replace(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(
     t_key_value *key_val;
     char *tmp;
 
-    key_val = get_key_value(ht, k, size);
+    key_val = get_key_value(ht, k);
     if (key_val)
     {
         tmp = key_val->value;
         del(key_val->value);
         key_val->value = v;
+        free(k);
     }
     else
         insert_to_table(ht, k, v, size);
@@ -180,9 +191,11 @@ void    ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
     t_list *tmp;
     t_list *p;
 
-    id = hash_code(k, size, ht->lenght);
+    id = hash_code(k, ht->lenght);
+    if (id == -1)
+        return ;
     tmp = ht->backets[id];
-    if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
+    if (!ft_strncmp(k, ((t_key_value *)tmp->data)->key, ft_strlen(((t_key_value *)tmp->data)->key)))
     {
         ht->backets[id] = tmp->next;
         del(((t_key_value *)tmp->data)->key);
@@ -192,19 +205,29 @@ void    ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
     }
     else
     {
-        p = tmp;
         while (tmp)
         {
-            if (!ft_memcmp(k, ((t_key_value *)tmp->data)->key, size))
+            if (!ft_strncmp(k, ((t_key_value *)tmp->data)->key, ft_strlen(((t_key_value *)tmp->data)->key)))
             {
-                p->next = tmp->next;
+                if (tmp->prev)
+                    tmp->prev->next = tmp->next;
+                else
+                {
+                    tmp = tmp->next;
+                    tmp->prev = NULL;
+                }
+                if (tmp->next)
+                    tmp->next->prev = tmp->prev;
+                else
+                    tmp->prev->next = NULL;
+                // p->next = tmp->next;
                 del(((t_key_value *)tmp->data)->key);
                 del(((t_key_value *)tmp->data)->value);
-                ft_lstdelone(tmp, del);
+                //ft_lstdelone(tmp, del);
                 tmp = NULL;
                 break;
             }
-            p = tmp;
+            // p = tmp;
             tmp = tmp->next;
         }
     }
@@ -212,11 +235,8 @@ void    ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
 
 void    ht_add(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void*))
 {
-    if (get_value(ht, k, size))
-    {
+    if (get_value(ht, k))
         ht_replace(ht, k, v,size, del);
-        free(k);
-    }
     else
         insert_to_table(ht, k, v, size);
 }

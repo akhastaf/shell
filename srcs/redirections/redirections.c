@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:32:36 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/10 13:42:23 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/21 17:26:07 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void    setup_redirection(t_cmd *cmd)
 {
     t_list *red;
-
+    
     red = cmd->red;
     cmd->fdout = 0;
     cmd->fdin = 0;
+    g_sh.error = 0;
     while (red)
     {
         if (red && ((t_red*)red->data)->type[0] == '<')
@@ -28,11 +29,12 @@ void    setup_redirection(t_cmd *cmd)
         if ((cmd->fdin < 0 || cmd->fdout < 0))
         {
             g_sh.error = 1;
-            ft_putstr_fd("minishell: ", 1);
-            ft_putstr_fd(((t_red*)red->data)->file, 1);
-            ft_putstr_fd(": ", 1);
-            ft_putendl_fd(strerror(errno), 1);
+            ft_putstr_fd("minishell: ", 2);
+            ft_putstr_fd(((t_red*)red->data)->file, 2);
+            ft_putstr_fd(": ", 2);
+            ft_putendl_fd(strerror(errno), 2);
             g_sh.status = 1;
+            return ;
         }
         if (red->next && cmd->fdout && ((t_red*)red->next->data)->type[0] != '<')
             close(cmd->fdout);

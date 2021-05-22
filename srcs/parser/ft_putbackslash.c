@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:28:26 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/09 16:28:50 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/21 17:47:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char    *ft_putbackslash(char *s)
             q = 1;
         else if (s[i] == '"' && q)
             q = 0;
-        if ((s[i] == '"' && sq) || (s[i] == '\\' && sq) || (s[i] == '\\' && s[i +1] != '\\' && s[i + 1] != '"' && s[i + 1] != '$' && q))
+        if ((s[i] == '"' && sq) || (s[i] == '\\' && sq) || (s[i] == '\\' && s[i +1] != '\\' && s[i + 1] != '"' && s[i + 1] != '\'' && s[i + 1] != '$' && q))
         {
             new = ft_strappend(new, '\\');
             j++;
@@ -49,5 +49,27 @@ char    *ft_putbackslash(char *s)
         new[i + j] = 0;
     if (s)
         free(s);
+    return new;
+}
+
+
+char    *ft_keepq(char *s)
+{
+    char *new;
+    int i;
+
+    if (!s)
+        return NULL;
+    i = 0;
+    new = NULL;
+    while (s[i])
+    {
+        if (s[i] == '"')
+            new = ft_strappend(new, '\\');
+        new = ft_strappend(new, s[i]);
+        i++;
+    }
+    if (s)
+    free(s);
     return new;
 }
