@@ -77,7 +77,9 @@ int	builtins_export(char **arg)
             var = ft_strndup(arg[i], n);
         else
             var = ft_strdup(arg[i]);
+        tmp = val;
         val = ft_strjoin(val, arg[i] + n + 1);
+        free(tmp);
         check_var(var, arg[i], &ret);
         if (!n && !ft_isstrnchr(var, " |!;&$@\\'\""))
             insert_to_table(g_sh.env, var, NULL, ft_strlen(var));

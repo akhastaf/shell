@@ -18,7 +18,6 @@ void    init_pipeline(void)
     t_pipeline *p;
     int i;
     
-    p = NULL;
     if (g_sh.line)
     {
         pipeline = ft_split(g_sh.line, ";");
@@ -31,6 +30,7 @@ void    init_pipeline(void)
             ft_lstadd_back(&g_sh.pipeline, ft_lstnew(p));
             i++;
         }
+        free(pipeline);
     }
 }
 
@@ -53,19 +53,20 @@ void    process_pipeline(t_pipeline *p)
         arg = ft_split(cmds[i], " ");
         if (arg && arg[0])
         {
-            cmd->path = ft_getpath(ft_strremove(ft_strremove(ft_strremove(ft_putbackslash(ft_strdup(arg[0])), '\''), '"'), '\\'));
-            ft_argmap(&arg, ft_putbackslash);  
+            cmd->path = ft_getpath(ft_strdup(arg[0]));
+            ft_argmap(&arg, ft_putbackslash);
         }
         cmd->arg = arg;
         cmd->fdin = 0;
         cmd->fdout = 0;
         cmd->pipe[0] = -1;
         cmd->pipe[1] = -1;
-        if (!cmd->path)
+        if (!(cmd->path))
             cmd->path = ft_strdup("");
         ft_lstadd_back(&(p->cmd), ft_lstnew(cmd));
         i++;
     }
+    ft_delete_arg(cmds);
 }
 void    delete_red(void *red)
 {
@@ -77,9 +78,11 @@ void    delete_cmd(void *cmd)
     free(((t_cmd*)cmd)->path);
     ft_delete_arg(((t_cmd*)cmd)->arg);
     ft_lstclear(&(((t_cmd*)cmd)->red), delete_red);
+    free(cmd);
 }
 void    delete_pipe(void *p)
 {
     free(((t_pipeline*)p)->str);
     ft_lstclear(&(((t_pipeline*)p)->cmd), delete_cmd);
+    free(p);
 }

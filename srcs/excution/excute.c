@@ -64,21 +64,29 @@ void    check_errors(t_cmd *cmd, int err)
     {
         printf("minishell: %s: is a directory\n", cmd->path);
         closedir(dir);
+        if (path)
+            free(path);
         exit(126);
     }
     else if ((!path || ft_is_empty(path)) && stat(spath, &sb))
     {
         printf("minishell: %s: No such file or directory\n", cmd->path);
+        if (path)
+            free(path);
         exit(127);
     }
     else if (err == 2 || dir)
     {
         printf("minishell: %s: command not found\n", cmd->path);
+        if (path)
+            free(path);
         exit(127);
     }
     else if (err != 8)
     {
         printf("minishell: %s: Permission denied\n", cmd->path);
+        if (path)
+            free(path);
         exit(126);
     }
 }

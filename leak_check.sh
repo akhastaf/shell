@@ -1,6 +1,6 @@
 #!/bin/sh
 while true; do
-    leaks minishell
+    leaks minishell 
     sleep 1
     clear
 done

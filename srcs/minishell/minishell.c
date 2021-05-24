@@ -32,8 +32,9 @@ void    minishell_loop(void)
         else
         {
             init_pipeline();
-            //print_pipeline();
+            // print_pipeline();
             excute();
+
             ft_lstclear(&(g_sh.pipeline), delete_pipe);
         }
         free(g_sh.line);

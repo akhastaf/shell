@@ -22,6 +22,10 @@ char *ft_getpath(char *file)
     int i;
 
     i = 0;
+    file = ft_putbackslash(file);
+    file = ft_strremove(file, '\'');
+    file = ft_strremove(file, '"');
+    file = ft_strremove(file, '\\');
     pathenv = ft_getenv("PATH");
     if (ft_is_empty(file) || file[0] == '.' || ft_isbuiltins(file) || !pathenv || ft_strchr(file, '/'))
     {
