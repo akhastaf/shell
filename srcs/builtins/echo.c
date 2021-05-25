@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/20 08:50:06 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:49:29 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,3 @@ int	builtins_echo(char **arg)
 		ft_putstr_fd("\n", 1);
 	return (0);
 }
-

@@ -6,18 +6,18 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 17:46:41 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/16 17:47:09 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:53:08 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int     count_singleq(char *str)
+int	count_singleq(char *str)
 {
-	int i;
-	int j;
-	int q;
-	int sq;
+	int	i;
+	int	j;
+	int	q;
+	int	sq;
 
 	i = 0;
 	q = 0;
@@ -37,5 +37,5 @@ int     count_singleq(char *str)
 			j++;
 		i++;
 	}
-	return j;
+	return (j);
 }

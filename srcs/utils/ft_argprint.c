@@ -6,15 +6,15 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:08:10 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/20 17:24:42 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/25 11:21:00 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void    ft_argprint(char **arg)
+void	ft_argprint(char **arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg[i])

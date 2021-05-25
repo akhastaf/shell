@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strchrn.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/25 12:01:06 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 12:01:35 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int     ft_strchrn(char *s, char c)
+int	ft_strchrn(char *s, char c)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == c)
-            return i;
-        i++;
-    }
-    return 0;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (0);
 }

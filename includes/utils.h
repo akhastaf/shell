@@ -83,4 +83,7 @@ void    ft_puterror(char *f, char *ar, char *l);
 void    ft_argprint(char **arg);
 int	ternary(int condition, int ret1, int ret2);
 void    ft_argmap(char ***arg, char *(*map)(char *));
+void    ft_quotes(char c, int *q, int *sq);
+void	ft_free(char **s);
+void	ft_skip_space(char *str, int *i);
 #endif

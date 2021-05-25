@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 11:41:59 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 11:42:15 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/25 16:20:26 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 16:20:42 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	signals(int sig)
 {
-	int	i;
-
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
+	if (sig == SIGINT)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		ft_free(&g_sh.line);
+		if (g_sh.tmp_line)
+			ft_free(&g_sh.tmp_line);
+		g_sh.tmp_hist = NULL;
+		if (g_sh.pid == 0)
+		{
+			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\033[0;32mMinishell$> \033[0m", 1);
+		}
+		else if (g_sh.pid)
+			ft_putstr_fd("\n", 1);
+	}
+	if (sig == SIGQUIT)
+	{
+		if (g_sh.pid)
+			ft_putstr_fd("Quit: 3\n", 1);
 	}
 }

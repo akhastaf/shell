@@ -57,8 +57,9 @@ int	    builtins_pwd(char **arg);
 int     builtins_unset(char **arg);
 int     builtins_echo(char **arg);
 int     builtins_cd(char **arg);
-int     builtins_export(char **arg);
 int     builtins_exit(char **arg);
+int     builtins_export(char **arg);
+void    init_export(t_kv *e, char **tmp, t_ex *ex);
 
 // ENV
 char    *ft_getenv(char *var);
@@ -75,7 +76,6 @@ int     gnl_term(void);
 int     putchar_tc(int c);
 void	backspace(void);
 void	handle_keys(long c);
-void	ft_free(char **s);
 void	add_hist(char *s);
 void	up_hist(void);
 void	line_form_hist(void);
@@ -96,9 +96,11 @@ int     count_doubleq(char *str);
 int     count_singleq(char *str);
 int     check_quote();
 int     check_red();
+int     check_forbiden(void);
 int     check_pipe();
 char    *check_syntax();
 
 // LAST COMMAND
 void	ft_set_lstcmd(t_list *cmd);
+void	signals(int sig);
 #endif

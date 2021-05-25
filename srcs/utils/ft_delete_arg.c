@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_delete_arg.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/25 11:30:45 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 11:31:02 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-void    ft_delete_arg(char **arg)
+void	ft_delete_arg(char **arg)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arg[i])
-    {
-        free(arg[i]);
-        i++;
-    }
-    free(arg);
+	i = 0;
+	while (arg[i])
+	{
+		free(arg[i]);
+		i++;
+	}
+	free(arg);
 }

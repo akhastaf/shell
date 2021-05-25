@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_argsize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/25 11:21:25 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 11:22:01 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-
-int     ft_argsize(char **arg)
+int	ft_argsize(char **arg)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arg[i])
-        i++;
-    return i;
+	i = 0;
+	while (arg[i])
+		i++;
+	return (i);
 }

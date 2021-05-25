@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/25 11:36:00 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 11:37:44 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-static	int		ft_getsize(int n)
+static int	ft_getsize(int n)
 {
 	int				i;
 	unsigned int	nb;
@@ -20,7 +32,7 @@ static	int		ft_getsize(int n)
 	return (i + 1);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char			*str;
 	int				i;
@@ -28,7 +40,8 @@ char			*ft_itoa(int n)
 
 	nb = n;
 	i = ft_getsize(n);
-	if (!(str = malloc(sizeof(char) * i + 1)))
+	str = malloc(sizeof(char) * i + 1);
+	if (!str)
 		return (NULL);
 	str[i] = '\0';
 	if (n < 0)

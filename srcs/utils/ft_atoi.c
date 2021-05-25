@@ -1,4 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/25 11:22:39 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 11:26:48 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
+
+static int	skip_space(char *str)
+{
+	int	i;
+
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	return (i);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -6,11 +27,9 @@ int	ft_atoi(const char *str)
 	int		signe;
 	size_t	n;
 
-	i = 0;
 	signe = 1;
 	n = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
-		i++;
+	i = skip_space((char*)str);
 	if (str[i] == 45 || str[i] == 43)
 	{
 		if (str[i] == 45)

@@ -6,18 +6,18 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 10:55:43 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/13 14:34:11 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:14:23 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-size_t  ft_strlen(char const *str)
+size_t	ft_strlen(char const *str)
 {
-    int i;
-    
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

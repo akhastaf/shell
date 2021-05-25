@@ -12,6 +12,17 @@
 
 typedef int fun_ptr(char **);
 
+typedef struct s_kv
+{
+	char *k;
+	char *v;
+}		t_kv;
+
+typedef struct s_ex
+{
+	int n;
+	int ret;
+}		t_ex;
 
 typedef struct s_tc
 {

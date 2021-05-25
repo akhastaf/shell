@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 11:41:59 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 11:42:15 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/25 12:20:26 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/25 12:22:21 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_quotes(char c, int *q, int *sq)
 {
-	int	i;
-
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	if (c == '"' && !(*q) && !(*sq))
+		*q = 1;
+	else if (c == '"' &&* q)
+		*q = 0;
+	if (c == '\'' && !(*sq) && !(*q))
+		*sq = 1;
+	else if (c == '\'' && *sq)
+		*sq = 0;
 }

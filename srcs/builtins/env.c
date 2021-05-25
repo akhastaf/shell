@@ -6,18 +6,17 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:16 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/21 15:43:06 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:47:47 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	builtins_env(char **arg)
+static void	set_lastcmd(void)
 {
 	int		i;
-	char	*lstcmd;
 	int		l;
-    t_list  *tmp;
+	char	*lstcmd;
 
 	i = 1;
 	lstcmd = ft_getpath(ft_strdup("ENV"));
@@ -28,21 +27,29 @@ int	builtins_env(char **arg)
 		i++;
 	}
 	ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1, free);
+}
+
+int	builtins_env(char **arg)
+{
+	int		i;
+	t_list	*tmp;
+
+	set_lastcmd();
 	i = 0;
 	while (i < g_sh.env->lenght)
-    {
-        tmp = g_sh.env->backets[i];
-        while (tmp && ((t_key_value*)tmp->data)->value)
-        {
-			if (ft_strcmp(((t_key_value*)tmp->data)->key, "_"))
+	{
+		tmp = g_sh.env->backets[i];
+		while (tmp && ((t_key_value *)tmp->data)->value)
+		{
+			if (ft_strcmp(((t_key_value *)tmp->data)->key, "_"))
 			{
-            	printf("%s=%s\n", (char*)((t_key_value*)tmp->data)->key,
-           		(char*)((t_key_value*)tmp->data)->value);
+				printf("%s=%s\n", (char *)((t_key_value *)tmp->data)->key,
+					(char*)((t_key_value *)tmp->data)->value);
 			}
-            tmp = tmp->next;
-        }
-        i++;
-    }
+			tmp = tmp->next;
+		}
+		i++;
+	}
 	printf("_=%s\n", get_value(g_sh.env, "_"));
 	return (0);
 }

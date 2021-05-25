@@ -72,6 +72,7 @@ void    delete_red(void *red)
 {
     free(((t_red*)red)->file);
     free(((t_red*)red)->type); 
+    free(red);
 }
 void    delete_cmd(void *cmd)
 {
