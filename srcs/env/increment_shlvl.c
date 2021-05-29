@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_term.c                                       :+:      :+:    :+:   */
+/*   increment_shlvl.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:18:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 18:52:37 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/28 17:42:12 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/28 17:44:37 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_term(void)
+void	increment_shlvl(void)
 {
-	g_sh.tc.name = getenv("TERM");
-	if (!g_sh.tc.name)
-		printf("TERM not set\n");
-	tgetent(NULL, g_sh.tc.name);
-	setupterm(NULL, STDOUT_FILENO, NULL);
-	tcgetattr(0, &g_sh.tc.term);
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ICANON;
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ECHO;
-	g_sh.tc.term.c_cc[VMIN] = 1;
-	g_sh.tc.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_sh.tc.term);
+	int		value;
+	char	*env;
+	char	*v;
+
+	env = ft_getenv("SHLVL");
+	if (env)
+		value = ft_atoll(env);
+	else
+		value = 0;
+	free(env);
+	if (value >= 2147483647)
+		value = -1;
+	if (value >= 200000)
+	{
+		printf("minishell: warning: shell level (%d) too high, \
+				resetting to 1", value + 1);
+		value = 0;
+	}
+	else if (value < 0)
+		value = -1;
+	v = ft_itoa(value + 1);
+	ht_replace(g_sh.env, ft_strdup("SHLVL"), v, 5, free);
 }

@@ -33,6 +33,7 @@ void            ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(vo
 void            ht_add(t_hash_table *ht, void *k, void *v, size_t size, void (*del)(void*));
 void            print_ht(t_hash_table *ht);
 char    **ht_totable(t_hash_table *ht);
+unsigned int	hash_code(const void *key, int lenght);
 
 
 //UTILS

@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_term.c                                       :+:      :+:    :+:   */
+/*   count_backslash.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:18:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 18:52:37 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/28 17:40:21 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/29 15:34:46 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_term(void)
+int	count_backslash(char *str)
 {
-	g_sh.tc.name = getenv("TERM");
-	if (!g_sh.tc.name)
-		printf("TERM not set\n");
-	tgetent(NULL, g_sh.tc.name);
-	setupterm(NULL, STDOUT_FILENO, NULL);
-	tcgetattr(0, &g_sh.tc.term);
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ICANON;
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ECHO;
-	g_sh.tc.term.c_cc[VMIN] = 1;
-	g_sh.tc.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_sh.tc.term);
+	int	i;
+	int	j;
+	int	sq;
+
+	sq = 0;
+	i = ft_strlen(str) - 1;
+	j = 0;
+	while (i >= 0)
+	{
+		if (str[i] == '\'' && !sq)
+			sq = 0;
+		else if (str[i] == '\'' && sq)
+			sq = 0;
+		if (str[i] == '\\' && !sq)
+			j++;
+		else if (str[i] != '\\')
+			break ;
+		i--;
+	}
+	return (j);
 }

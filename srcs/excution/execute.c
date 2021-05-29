@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_term.c                                       :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:18:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 18:52:37 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/04/17 15:24:47 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/26 15:51:19 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_term(void)
+void	execute(void)
 {
-	g_sh.tc.name = getenv("TERM");
-	if (!g_sh.tc.name)
-		printf("TERM not set\n");
-	tgetent(NULL, g_sh.tc.name);
-	setupterm(NULL, STDOUT_FILENO, NULL);
-	tcgetattr(0, &g_sh.tc.term);
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ICANON;
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ECHO;
-	g_sh.tc.term.c_cc[VMIN] = 1;
-	g_sh.tc.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_sh.tc.term);
+	t_list	*tmp;
+
+	tmp = g_sh.pipeline;
+	while (tmp)
+	{
+		process_pipeline(((t_pipeline *)tmp->data));
+		open_pipes(((t_pipeline *)tmp->data));
+		if (((t_pipeline *)tmp->data)->cmd)
+			magic_box(tmp->data);
+		reset_std();
+		if (!tmp->next)
+			ft_set_lstcmd(((t_pipeline *)tmp->data)->cmd);
+		tmp = tmp->next;
+	}
 }

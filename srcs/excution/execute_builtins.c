@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   excute_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/29 15:57:09 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:57:17 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/26 15:46:32 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/26 15:50:43 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free(char **s)
+void	execute_builtins(char *path, char **arg)
 {
-	free(*s);
-	*s = NULL;
+	fun_ptr	*f;
+
+	f = get_value(g_sh.builtins, path);
+	g_sh.status = f(arg);
 }

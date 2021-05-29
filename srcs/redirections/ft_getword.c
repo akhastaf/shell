@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_term.c                                       :+:      :+:    :+:   */
+/*   ft_getword.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:18:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 18:52:37 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/26 14:07:02 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/26 14:11:50 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_term(void)
+char	*ft_getword(char *word, char *set)
 {
-	g_sh.tc.name = getenv("TERM");
-	if (!g_sh.tc.name)
-		printf("TERM not set\n");
-	tgetent(NULL, g_sh.tc.name);
-	setupterm(NULL, STDOUT_FILENO, NULL);
-	tcgetattr(0, &g_sh.tc.term);
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ICANON;
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ECHO;
-	g_sh.tc.term.c_cc[VMIN] = 1;
-	g_sh.tc.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_sh.tc.term);
+	int		i;
+	int		q;
+	int		sq;
+	char	*w;
+
+	i = 0;
+	q = 0;
+	sq = 0;
+	ft_skip_space(word, &i);
+	while (word[i])
+	{
+		ft_quotes(word[i], &q, &sq);
+		if (ft_strchr(set, word[i]) && word[i] != ' ')
+			break ;
+		else if (word[i] == ' ' && !q && !sq)
+			break ;
+		i++;
+	}
+	w = ft_strndup(word, i);
+	return (w);
 }

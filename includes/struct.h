@@ -98,5 +98,7 @@ typedef struct s_sh
 	int			error;
 	int			pid;
 	int			is_pipe;
+	char		*oldpwd;
+	char		*pwd;
 }				t_sh;
 #endif

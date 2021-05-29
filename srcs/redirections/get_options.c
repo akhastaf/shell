@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_term.c                                       :+:      :+:    :+:   */
+/*   get_options.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:18:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 18:52:37 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/05/26 14:06:27 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/05/26 14:12:18 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_term(void)
+int	get_option(t_red *red)
 {
-	g_sh.tc.name = getenv("TERM");
-	if (!g_sh.tc.name)
-		printf("TERM not set\n");
-	tgetent(NULL, g_sh.tc.name);
-	setupterm(NULL, STDOUT_FILENO, NULL);
-	tcgetattr(0, &g_sh.tc.term);
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ICANON;
-	g_sh.tc.term.c_lflag = g_sh.tc.term.c_lflag & ~ECHO;
-	g_sh.tc.term.c_cc[VMIN] = 1;
-	g_sh.tc.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_sh.tc.term);
+	int	option;
+
+	option = 0;
+	if (red->type && red->type[0] == '>' && red->type[1] != '>')
+		option = O_CREAT | O_WRONLY | O_TRUNC;
+	else if (red->type && red->type[0] == '<')
+		option = O_RDONLY;
+	else if (red->type && !ft_strcmp(red->type, ">>"))
+		option = O_CREAT | O_WRONLY | O_APPEND;
+	return (option);
 }

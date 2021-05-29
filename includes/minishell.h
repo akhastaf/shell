@@ -28,12 +28,15 @@ void	increment_shlvl(void);
 void	signals(int sig);
 
 // Excutions
-int     warp_excute(t_pipeline *p);
-void     excute();
+void     execute(void);
+void	magic_box(t_pipeline *p);
+void	execute_builtins(char *path, char **arg);
+void	check_execute_errors(t_cmd *cmd, int err);
 // PROCESSE
 void    init_pipeline(void);
 void    process_pipeline(t_pipeline *p);
 char    *ft_refactor_line(char *s);
+char	*ft_tilde(char *s, char *line, int i);
 char    *ft_putbackslash(char *s);
 char    *ft_keepq(char *s);
 char	*ft_strremove(char *s, char c);

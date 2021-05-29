@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 11:17:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 16:10:08 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/29 16:44:34 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_env(char **env)
 	i = 0;
 	while (i < l)
 	{
+		printf("%s\n", env[i]);
 		n = ft_strchrn(env[i], '=');
 		key = ft_strndup(env[i], n);
 		val = ft_strdup(env[i] + n + 1);
@@ -68,30 +69,6 @@ void	init_builtins(void)
 	insert_to_table(g_sh.builtins, ft_strdup("cd"), builtins_cd, 2);
 }
 
-int	count_backslash(char *str)
-{
-	int	i;
-	int	j;
-	int	sq;
-
-	sq = 0;
-	i = ft_strlen(str) - 1;
-	j = 0;
-	while (i >= 0)
-	{
-		if (str[i] == '\'' && !sq)
-			sq = 0;
-		else if (str[i] == '\'' && sq)
-			sq = 0;
-		if (str[i] == '\\' && !sq)
-			j++;
-		else if (str[i] != '\\')
-			break ; 
-		i--;
-	}
-	return (j);
-}
-
 void	init_errors(void)
 {
 	g_sh.errors = malloc(sizeof(char *) * 11);
@@ -107,83 +84,4 @@ void	init_errors(void)
 	g_sh.errors[8] = ft_strdup("minishell: syntax error token `>'");
 	g_sh.errors[9] = ft_strdup("minishell: syntax error token `newline'");
 	g_sh.errors[10] = ft_strdup("minishell: syntax error multiline");
-}
-
-void	ft_set_pwd(void)
-{
-	char	*pwd;
-	char	*lstcmd;
-
-	pwd = ft_getenv("PWD");
-	if (!pwd)
-	{
-		pwd = getcwd(NULL, 0);
-		if (!pwd)
-			pwd = ft_strdup("");
-	}
-	ht_replace(g_sh.env, ft_strdup("PWD"), pwd, 3, free);
-}
-
-void	increment_shlvl(void)
-{
-	int		value;
-	char	*env;
-	char	*v;
-
-	env = ft_getenv("SHLVL");
-	if (env)
-		value = ft_atoll(env);
-	else
-		value = 0;
-	free(env);
-	if (value >= 2147483647)
-		value = -1;
-	if (value >= 200000)
-	{
-		printf("minishell: warning: shell level (%d) too high, \
-				resetting to 1", value + 1);
-		value = 0;
-	}
-	else if (value < 0)
-		value = -1;
-	v = ft_itoa(value + 1);
-	ht_replace(g_sh.env, ft_strdup("SHLVL"), v, 5, free);
-}
-
-void	ft_set_lstcmd(t_list *cmd)
-{
-	int		n;
-	int		l;
-	char	*lstcmd;
-	t_cmd	*lcmd;
-	char	*tmp;
-
-	n = 0;
-	l = 0;
-	if (cmd->next)
-	{
-		ht_delone(g_sh.env, "_", 1, free);
-		return ;
-	}
-	if (!ft_strcmp(((t_cmd *)cmd->data)->path, "echo")
-		&& !ft_argcmp(((t_cmd *)cmd->data)->arg, "$_") && cmd->prev)
-		lcmd = cmd->prev->data;
-	else if (!ft_strcmp(((t_cmd *)cmd->data)->path, "echo")
-		&& !ft_argcmp(((t_cmd *)cmd->data)->arg, "$_"))
-		lcmd = NULL;
-	else
-		lcmd = cmd->data;
-	if (lcmd)
-	{
-		n = ft_argsize(lcmd->arg) - 1;
-		if (!lcmd->arg[0])
-			lstcmd = strdup("");
-		else if ((l = ft_strchrn(lcmd->arg[n], '=')))
-			lstcmd = ft_substr(lcmd->arg[n], 0, l);
-		else if (!(ft_strcmp(ft_strtolower(lcmd->arg[0]), "env")))
-			lstcmd = ft_strdup(lcmd->path);
-		else
-			lstcmd = ft_strdup(lcmd->arg[n]);
-		ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1, free);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 11:22:39 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 11:26:48 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:56:55 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_atoi(const char *str)
 
 	signe = 1;
 	n = 0;
-	i = skip_space((char*)str);
+	i = skip_space((char *)str);
 	if (str[i] == 45 || str[i] == 43)
 	{
 		if (str[i] == 45)

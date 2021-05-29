@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:06:58 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 20:18:32 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/26 15:48:27 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	minishell_loop(void)
 		else
 		{
 			init_pipeline();
-			excute();
+			execute();
 			ft_lstclear(&(g_sh.pipeline), delete_pipe);
 		}
 		free(g_sh.line);

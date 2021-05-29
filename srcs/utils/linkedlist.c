@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:38:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/20 11:22:16 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:39:39 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = *alst;
 	if (temp)
@@ -47,7 +47,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 		{
 			next = tmp->next;
 			ft_lstdelone(tmp, del);
-			tmp =next;
+			tmp = next;
 		}
 		*lst = NULL;
 	}
@@ -61,119 +61,10 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 		free(lst);
 }
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	if (lst && f)
-	{
-		while (lst)
-		{
-			f(lst->data);
-			lst = lst->next;
-		}
-	}
-}
-
 t_list	*ft_lstlast(t_list *lst)
 {
 	if (lst)
 		while (lst->next)
 			lst = lst->next;
 	return (lst);
-}
-
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-{
-	t_list	*new;
-	t_list	*list;
-
-	list = NULL;
-	while (lst)
-	{
-		if (!(new = ft_lstnew(f(lst->data))))
-		{
-			ft_lstclear(&list, del);
-			return (NULL);
-		}
-		ft_lstadd_back(&list, new);
-		lst = lst->next;
-	}
-	return (list);
-}
-
-t_list	*ft_lstnew(void *data)
-{
-	t_list	*new;
-
-	if (!(new = malloc(sizeof(t_list))))
-		return (NULL);
-	new->data = data;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-int		ft_lstsize(t_list *lst)
-{
-	int		i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
-void	ft_lstprint(t_list *lst)
-{
-	t_list *tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (tmp->data)
-			printf("%s=%s\n", tmp->data, get_value(g_sh.env, tmp->data));
-		tmp = tmp->next;
-	}
-}
-
-void	ft_listprint(t_list *lst)
-{
-	t_list *tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (tmp->data)
-			printf("%s\n", tmp->data);
-		tmp = tmp->next;
-	}
-}
-
-void swap(t_list *a, t_list *b)
-{
-    char *temp;
-	temp = a->data;
-    a->data = b->data;
-    b->data = temp;
-}
-
-void	sort_list(t_list **lst)
-{
-	t_list *tmp;
-	t_list *tmp1;
-
-	tmp = *lst;
-	while (tmp)
-	{
-		tmp1 = *lst;
-		while (tmp1)
-		{
-			if (tmp1->next && ft_strcmp(tmp1->data, tmp1->next->data) >= 0)
-				swap(tmp1, tmp1->next);
-			tmp1 = tmp1->next;
-		}
-		tmp = tmp->next;
-	}
 }
