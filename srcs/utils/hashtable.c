@@ -17,7 +17,7 @@ void	init_hashtable(t_hash_table **ht, size_t lenght)
 	size_t	i;
 
 	*ht = malloc(sizeof(t_hash_table));
-	if (*ht)
+	if (!(*ht))
 		return ;
 	(*ht)->lenght = lenght;
 	(*ht)->backets = malloc(sizeof(t_list *) * lenght);

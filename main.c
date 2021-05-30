@@ -48,7 +48,6 @@ void	init_env(char **env)
 	i = 0;
 	while (i < l)
 	{
-		printf("%s\n", env[i]);
 		n = ft_strchrn(env[i], '=');
 		key = ft_strndup(env[i], n);
 		val = ft_strdup(env[i] + n + 1);

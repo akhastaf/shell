@@ -43,10 +43,10 @@ static void	execute_pipeline(t_list *p)
 					((t_cmd *)p->data)->arg);
 				exit(g_sh.status);
 			}
-			if (!g_sh.error && execve(((t_cmd *)p->data)->path,
+			if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path) && execve(((t_cmd *)p->data)->path,
 					((t_cmd *)p->data)->arg, ht_totable(g_sh.env)))
 				check_execute_errors(p->data, errno);
-			exit(1);
+			exit(0);
 		}
 		close(((t_cmd *)p->data)->pipe[1]);
 		if (p->prev)

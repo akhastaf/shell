@@ -36,7 +36,7 @@ static void	print_export(void)
 
 static void	check_var(char *var, char *arg, int *ret)
 {
-	if (ft_isdigit(var[0]) || ft_isstrnchr(var, " |!;&$@\\'\"")
+	if (ft_isdigit(var[0]) || ft_isstrnchr(var, " -|!;&$@\\'\"")
 		|| ft_is_empty(var))
 	{
 		printf("minishell: export: `%s': not a valid identifier", arg);

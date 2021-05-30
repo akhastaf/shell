@@ -25,7 +25,7 @@ static char	find_red(char *cmd, int *i)
 		free(tmp);
 	}
 	else if ((cmd[*i] == '<' || cmd[*i] == '>')
-		&& cmd[ternary(i - 1 < 0, 0, (*i) - 1)] != '\\')
+		&& cmd[ternary(*i - 1 < 0, 0, (*i) - 1)] != '\\')
 	{
 		(*i)++;
 		tmp = ft_getword(cmd + (*i) + 1, " ><|;");

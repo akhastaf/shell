@@ -101,7 +101,6 @@ char	*ft_refactor_line(char *s)
 		else
 			line = ft_strappend(line, s[i]);
 	}
-	free(s);
 	if (!line)
 		return (ft_strdup(""));
 	return (line);
