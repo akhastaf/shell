@@ -15,27 +15,22 @@
 static t_cmd	*init_cmd(char *c)
 {
 	t_cmd	*cmd;
-	char	**arg;
 
 	c = ft_refactor_line(c);
 	cmd = malloc(sizeof(t_cmd));
 	cmd->red = get_redirection(c);
 	c = remove_red(c);
-	arg = ft_split(c, " ");
+	cmd->arg = ft_split(c, " ");
 	if (!cmd)
 		return (NULL);
-	if (arg && arg[0])
-	{
-		cmd->path = ft_getpath(ft_strdup(arg[0]));
-		ft_argmap(&arg, ft_putbackslash);
-	}
-	cmd->arg = arg;
+	if (!cmd->arg)
+		cmd->arg = ft_split("\t\t", " ");
+	cmd->path = ft_getpath(ft_strdup(cmd->arg[0]));
+	ft_argmap(&(cmd->arg), ft_putbackslash);
 	cmd->fdin = 0;
 	cmd->fdout = 0;
 	cmd->pipe[0] = -1;
 	cmd->pipe[1] = -1;
-	if (!(cmd->path))
-		cmd->path = ft_strdup("");
 	return (cmd);
 }
 
@@ -67,8 +62,11 @@ void	delete_red(void *red)
 
 void	delete_cmd(void *cmd)
 {
+	if (!(t_cmd *)cmd)
+		return ;
 	free(((t_cmd *)cmd)->path);
-	ft_delete_arg(((t_cmd *)cmd)->arg);
+	if (((t_cmd *)cmd)->arg)
+		ft_delete_arg(((t_cmd *)cmd)->arg);
 	ft_lstclear(&(((t_cmd *)cmd)->red), delete_red);
 	free(cmd);
 }

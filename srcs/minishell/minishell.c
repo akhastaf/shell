@@ -38,6 +38,7 @@ void	minishell_loop(void)
 		free(g_sh.line);
 		g_sh.line = NULL;
 		g_sh.pid = 0;
+		g_sh.error = 0;
 	}
 }
 

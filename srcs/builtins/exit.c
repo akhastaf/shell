@@ -26,6 +26,7 @@ static int	check_manyargs(char **arg)
 		if (!g_sh.is_pipe)
 			ft_putendl_fd("exit", 2);
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		g_sh.error = 1;
 		return (1);
 	}
 	return (0);

@@ -14,7 +14,7 @@
 
 static void	execute_nonpipeline(t_list *tmp)
 {
-	if (!ft_is_empty(((t_cmd *)tmp->data)->path)
+	if (!g_sh.error && !ft_is_empty(((t_cmd *)tmp->data)->path)
 		&& ft_isbuiltins(((t_cmd *)tmp->data)->path))
 	{
 		setup_redirection(tmp->data);
@@ -27,7 +27,7 @@ static void	execute_nonpipeline(t_list *tmp)
 
 static void	execute_pipeline(t_list *p)
 {
-	while (p && !ft_is_empty(((t_cmd *)p->data)->path))
+	while (p)
 	{
 		g_sh.is_pipe = 1;
 		g_sh.pid = fork();
@@ -37,7 +37,7 @@ static void	execute_pipeline(t_list *p)
 		{
 			setup_pipe(p);
 			setup_redirection(p->data);
-			if (!g_sh.error && ft_isbuiltins(((t_cmd *)p->data)->path))
+			if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path) && ft_isbuiltins(((t_cmd *)p->data)->path))
 			{
 				execute_builtins(((t_cmd *)p->data)->path,
 					((t_cmd *)p->data)->arg);
