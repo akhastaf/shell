@@ -15,18 +15,20 @@
 static t_cmd	*init_cmd(char *c)
 {
 	t_cmd	*cmd;
+	char	**arg;
 
 	c = ft_refactor_line(c);
 	cmd = malloc(sizeof(t_cmd));
 	cmd->red = get_redirection(c);
 	c = remove_red(c);
-	cmd->arg = ft_split(c, " ");
+	arg = ft_split(c, " ");
 	if (!cmd)
 		return (NULL);
-	if (!cmd->arg)
-		cmd->arg = ft_split("\t\t", " ");
-	cmd->path = ft_getpath(ft_strdup(cmd->arg[0]));
-	ft_argmap(&(cmd->arg), ft_putbackslash);
+	if (!arg)
+		arg = ft_split("\t\t", " ");
+	cmd->path = ft_getpath(ft_strdup(arg[0]));
+	ft_argmap(&arg, ft_putbackslash);
+	cmd->arg =arg;
 	cmd->fdin = 0;
 	cmd->fdout = 0;
 	cmd->pipe[0] = -1;

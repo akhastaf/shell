@@ -21,13 +21,13 @@ static char	*trim_path(char *file)
 	return (file);
 }
 
-static char	*check_builtins(char *file, int *i)
+static int	check_builtins(char *file, int *i)
 {
 	*i = 0;
 	if (ft_is_empty(file) || file[0] == '.' || ft_isbuiltins(file)
 		|| !ft_checkenv("PATH") || ft_strchr(file, '/'))
-		return (file);
-	return (file);
+		return (1);
+	return (0);
 }
 
 char	*ft_getpath(char *file)
@@ -39,7 +39,8 @@ char	*ft_getpath(char *file)
 	int			i;
 
 	file = trim_path(file);
-	file = check_builtins(file, &i);
+	if (check_builtins(file, &i))
+		return (file);
 	path = ft_split(get_value(g_sh.env, "PATH"), ":");
 	while (path[++i])
 	{

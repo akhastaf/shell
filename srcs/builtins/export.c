@@ -80,12 +80,13 @@ int	builtins_export(char **arg)
 	init_export(&e, &tmp, &ex);
 	if (ft_argsize(arg) == 1)
 		print_export();
-	i = -1;
+	i = 0;
 	while (arg[++i])
 	{
 		ex.n = ft_strchrn(arg[i], '+');
 		check_validarg(arg[i], &ex);
 		check_plus(arg, i, &(e.k), &(e.v));
+		ex.n = ft_strchrn(arg[i], '=');
 		tmp = e.v;
 		e.v = ft_strjoin(e.v, arg[i] + ex.n + 1);
 		free(tmp);

@@ -12,16 +12,16 @@
 
 #include "../../includes/minishell.h"
 
-static void	execute_nonpipeline(t_list *tmp)
+static void	execute_nonpipeline(t_list **tmp)
 {
-	if (!g_sh.error && !ft_is_empty(((t_cmd *)tmp->data)->path)
-		&& ft_isbuiltins(((t_cmd *)tmp->data)->path))
+	if (!g_sh.error && !ft_is_empty(((t_cmd *)(*tmp)->data)->path)
+		&& ft_isbuiltins(((t_cmd *)(*tmp)->data)->path))
 	{
-		setup_redirection(tmp->data);
+		setup_redirection((*tmp)->data);
 		if (!g_sh.error)
-			execute_builtins(((t_cmd *)tmp->data)->path,
-				((t_cmd *)tmp->data)->arg);
-		tmp = tmp->next;
+			execute_builtins(((t_cmd *)(*tmp)->data)->path,
+				((t_cmd *)(*tmp)->data)->arg);
+		*tmp = (*tmp)->next;
 	}
 }
 
@@ -62,7 +62,7 @@ void	magic_box(t_pipeline *p)
 
 	tmp = p->cmd;
 	if (!(tmp->next))
-		execute_nonpipeline(tmp);
+		execute_nonpipeline(&tmp);
 	execute_pipeline(tmp);
 	g_sh.is_pipe = 0;
 	close_pipe(p);

@@ -30,6 +30,7 @@ void	init_sh(char **env)
 	g_sh.status = 0;
 	g_sh.pid = 0;
 	g_sh.pipeline = NULL;
+	g_sh.error = 0;
 	if (ft_checkenv("OLDPWD"))
 		ht_delone(g_sh.env, "OLDPWD", 4, free);
 	increment_shlvl();

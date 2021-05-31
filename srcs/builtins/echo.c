@@ -45,7 +45,7 @@ int	builtins_echo(char **arg)
 {
 	int		n;
 	int		i;
-
+	
 	n = check_dashn(arg, &i);
 	while (arg[++i])
 	{
