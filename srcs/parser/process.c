@@ -16,6 +16,7 @@ static t_cmd	*init_cmd(char *c)
 {
 	t_cmd	*cmd;
 	char	**arg;
+	char	*tmp;
 
 	c = ft_refactor_line(c);
 	cmd = malloc(sizeof(t_cmd));
@@ -33,6 +34,7 @@ static t_cmd	*init_cmd(char *c)
 	cmd->fdout = -1;
 	cmd->pipe[0] = -1;
 	cmd->pipe[1] = -1;
+	ft_free(&c);
 	return (cmd);
 }
 

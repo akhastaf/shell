@@ -44,7 +44,9 @@ static char	*get_file(char *cmd, char *type, int *i)
 		free(tmp);
 		file = ft_strremove(file, '\'');
 		file = ft_strremove(file, '"');
+		tmp = file;
 		file = ft_refactor_line(file);
+		free(tmp);
 	}
 	return (file);
 }
