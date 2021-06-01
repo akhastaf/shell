@@ -99,4 +99,5 @@ void			ft_free(char **s);
 void			ft_skip_space(char *str, int *i);
 int				is_seperator(char *s, int i, char *set);
 void			*ft_dealocate(char ***t, int i);
+int				ft_isalnum(int c);
 #endif

@@ -71,6 +71,7 @@ SRC = ./srcs/builtins/cd.c \
 		./srcs/utils/ft_delete_arg.c \
 		./srcs/utils/ft_free.c \
 		./srcs/utils/ft_is_empty.c \
+		./srcs/utils/ft_isalnum.c \
 		./srcs/utils/ft_is_space.c \
 		./srcs/utils/ft_isdigit.c \
 		./srcs/utils/ft_itoa.c \

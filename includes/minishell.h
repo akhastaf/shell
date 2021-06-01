@@ -48,6 +48,7 @@ int			builtins_echo(char **arg);
 int			builtins_cd(char **arg);
 int			builtins_exit(char **arg);
 int			builtins_export(char **arg);
+int         check_varenv(char *var);
 void		init_export(t_kv *e, char **tmp, t_ex *ex);
 char		*ft_getenv(char *var);
 int			ft_checkenv(char *var);
