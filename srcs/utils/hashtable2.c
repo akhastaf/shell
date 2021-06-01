@@ -80,6 +80,7 @@ void	ht_delmultiple(t_list *tmp, void *k, void (*del)(void*))
 				tmp->prev->next = NULL;
 			del(((t_key_value *)tmp->data)->key);
 			del(((t_key_value *)tmp->data)->value);
+			ft_lstdelone(tmp, del);
 			tmp = NULL;
 			break ;
 		}

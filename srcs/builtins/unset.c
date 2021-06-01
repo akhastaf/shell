@@ -27,7 +27,8 @@ int	builtins_unset(char **arg)
 			printf("minishell: unset: `%s': not a valid identifier", arg[i]);
 			ret = 1;
 		}
-		ht_delone(g_sh.env, arg[i], ft_strlen(arg[i]), free);
+		else
+			ht_delone(g_sh.env, arg[i], ft_strlen(arg[i]), free);
 		i++;
 	}
 	return (ret);
