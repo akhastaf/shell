@@ -25,6 +25,7 @@ void	init_sh(char **env)
 	init_builtins();
 	init_errors();
 	ft_set_pwd();
+	g_sh.home = getenv("HOME");
 	g_sh.in = dup(0);
 	g_sh.out = dup(1);
 	g_sh.status = 0;
