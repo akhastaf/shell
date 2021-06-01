@@ -6,11 +6,18 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 14:05:28 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/26 14:53:42 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 16:44:57 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	init(char **type, t_list **redlist, int *i)
+{
+	*type = NULL;
+	*i = 0;
+	*redlist = NULL;
+}
 
 static t_red	*init_red(char *file, char *type)
 {
@@ -68,9 +75,7 @@ t_list	*get_redirection(char *cmd)
 	t_list	*redlist;
 	char	*file;
 
-	type = NULL;
-	redlist = NULL;
-	i = -1;
+	init(&type, &redlist, &i);
 	while (++i < ft_strlen(cmd))
 	{
 		if (cmd[i] == '"')

@@ -19,18 +19,18 @@ static t_cmd	*init_cmd(char *c)
 
 	c = ft_refactor_line(c);
 	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
 	cmd->red = get_redirection(c);
 	c = remove_red(c);
 	arg = ft_split(c, " ");
-	if (!cmd)
-		return (NULL);
 	if (!arg)
 		arg = ft_split("\t\t", " ");
-	cmd->path = ft_getpath(ft_strdup(arg[0]));
+	cmd->path = ft_getpath(ft_strdup(arg[0]), 0);
 	ft_argmap(&arg, ft_putbackslash);
-	cmd->arg =arg;
-	cmd->fdin = 0;
-	cmd->fdout = 0;
+	cmd->arg = arg;
+	cmd->fdin = -1;
+	cmd->fdout = -1;
 	cmd->pipe[0] = -1;
 	cmd->pipe[1] = -1;
 	return (cmd);

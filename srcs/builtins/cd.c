@@ -38,7 +38,7 @@ static int	missing_arg(char *arg, char **str, char **oldpwd)
 	}
 	else if (*str[0] == '\0' && *oldpwd)
 	{
-		ht_add(g_sh.env, ft_strdup("OLDPWD"), *oldpwd, 6, free);
+		ht_add(g_sh.env, ft_strdup("OLDPWD"), *oldpwd, 6);
 		return (1);
 	}
 	return (0);
@@ -77,7 +77,7 @@ void	set_pwd(char *str)
 		pwd = ft_strjoin(pwd, str);
 		free(tmp);
 	}
-	ht_add(g_sh.env, ft_strdup("PWD"), pwd, 3, free);
+	ht_add(g_sh.env, ft_strdup("PWD"), pwd, 3);
 }
 
 int	builtins_cd(char **arg)
@@ -96,7 +96,7 @@ int	builtins_cd(char **arg)
 	{
 		set_pwd(str);
 		if (oldpwd)
-			ht_add(g_sh.env, ft_strdup("OLDPWD"), oldpwd, 6, free);
+			ht_add(g_sh.env, ft_strdup("OLDPWD"), oldpwd, 6);
 	}
 	else
 	{

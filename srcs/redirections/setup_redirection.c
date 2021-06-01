@@ -44,7 +44,6 @@ void	setup_redirection(t_cmd *cmd)
 	red = cmd->red;
 	cmd->fdout = 0;
 	cmd->fdin = 0;
-	//g_sh.error = 0;
 	while (red)
 	{
 		if (red && ((t_red *)red->data)->type[0] == '<')

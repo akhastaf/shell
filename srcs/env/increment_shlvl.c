@@ -35,5 +35,5 @@ void	increment_shlvl(void)
 	else if (value < 0)
 		value = -1;
 	v = ft_itoa(value + 1);
-	ht_replace(g_sh.env, ft_strdup("SHLVL"), v, 5, free);
+	ht_replace(g_sh.env, ft_strdup("SHLVL"), v, 5);
 }

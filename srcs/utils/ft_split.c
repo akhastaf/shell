@@ -6,25 +6,17 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 16:36:14 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 16:40:53 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 16:59:17 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_seperator(char *s, int i, char *set)
+static void	init_split(int *i, int *j, int *wc)
 {
-	int	j;
-
-	j = 0;
-	while (set[j])
-	{
-		if (set[j] == s[i] && (s[ternary(i - 1 < 0, 1, i - 1)] != '\\'
-				|| !is_specialcar(s[i])))
-			return (1);
-		j++;
-	}
-	return (0);
+	*i = 0;
+	*j = -1;
+	*wc = 0;
 }
 
 static int	ft_wordscount(const char *str, char *set)
@@ -35,12 +27,12 @@ static int	ft_wordscount(const char *str, char *set)
 	int		len;
 
 	s = (char *)str;
-	i = 0;
+	i = -1;
 	wc = 0;
 	len = ft_strlen(s);
-	if (!is_seperator(s, i, set))
+	if (!is_seperator(s, 0, set))
 		wc++;
-	while (i < len)
+	while (++i < len)
 	{
 		if ((s[i] == 34 || s[i] == 39)
 			&& (s[ternary(i - 1 < 0, 0, i - 1)] != '\\'))
@@ -52,7 +44,6 @@ static int	ft_wordscount(const char *str, char *set)
 		if (s[ternary(i - 1 < 0, 0, i - 1)] != '\\' && is_seperator(s, i, set)
 			&& !is_seperator(s, i + 1, set) && s[i + 1])
 			wc++;
-		i++;
 	}
 	return (wc);
 }
@@ -85,15 +76,11 @@ static size_t	ft_wordlen(char *s, char *set, int i)
 	return (j);
 }
 
-static void	*ft_dealocate(char ***t, int i)
+static void	skip_split(char *s, int *i, char *set, size_t *len)
 {
-	while (i >= 0)
-	{
-		free((*t)[i]);
-		i--;
-	}
-	free(**t);
-	return (NULL);
+	while (is_seperator(s, *i, set) && s[*i])
+		(*i)++;
+	*len = ft_wordlen(s, set, *i);
 }
 
 char	**ft_split(char const *s, char *set)
@@ -104,9 +91,7 @@ char	**ft_split(char const *s, char *set)
 	int		wc;
 	size_t	len;
 
-	i = 0;
-	j = -1;
-	wc = 0;
+	init_split(&i, &j, &wc);
 	if (!((char *)s))
 		return (NULL);
 	wc = ft_wordscount((char *)s, set);
@@ -117,9 +102,7 @@ char	**ft_split(char const *s, char *set)
 		return (NULL);
 	while (++j < wc && ((char *)s)[i])
 	{
-		while (is_seperator(((char *)s), i, set) && ((char *)s)[i])
-			i++;
-		len = ft_wordlen((char *)s, set, i);
+		skip_split(((char *)s), &i, set, &len);
 		words[j] = ft_substr((char *)s, i, len);
 		if (!words[j])
 			return (ft_dealocate(&words, j));

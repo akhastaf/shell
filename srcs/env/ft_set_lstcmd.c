@@ -56,6 +56,6 @@ void	ft_set_lstcmd(t_list *cmd)
 			lstcmd = ft_strdup(lcmd->path);
 		else
 			lstcmd = ft_strdup(lcmd->arg[n]);
-		ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1, free);
+		ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1);
 	}
 }

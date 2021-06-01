@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:34:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 20:10:42 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:38:24 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*trim_path(char *file)
 {
-	file = ft_putbackslash(file);
+	file = ft_putbackslash(file, 0);
 	file = ft_strremove(file, '\'');
 	file = ft_strremove(file, '"');
 	file = ft_strremove(file, '\\');
@@ -30,13 +30,12 @@ static int	check_builtins(char *file, int *i)
 	return (0);
 }
 
-char	*ft_getpath(char *file)
+char	*ft_getpath(char *file, int i)
 {
 	struct stat	sb;
 	char		**path;
 	char		*tmp;
 	char		*filepath;
-	int			i;
 
 	file = trim_path(file);
 	if (check_builtins(file, &i))

@@ -6,18 +6,20 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 19:29:11 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:31:57 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	print_export(void)
+static void	print_export(char **arg)
 {
 	t_list	*tmp;
 	t_list	*env;
 	char	*value;
 
+	if (ft_argsize(arg) != 1)
+		return ;
 	value = NULL;
 	env = get_keys(g_sh.env);
 	sort_list(&env);
@@ -78,8 +80,7 @@ int	builtins_export(char **arg)
 	char	*tmp;
 
 	init_export(&e, &tmp, &ex);
-	if (ft_argsize(arg) == 1)
-		print_export();
+	print_export(arg);
 	i = 0;
 	while (arg[++i])
 	{
@@ -94,7 +95,7 @@ int	builtins_export(char **arg)
 		if (!(ex.n) && !ft_isstrnchr(e.k, " |!;&$@\\'\""))
 			insert_to_table(g_sh.env, e.k, NULL, ft_strlen(e.k));
 		else if (!ft_isstrnchr(e.k, " |!;&$@\\'\""))
-			ht_add(g_sh.env, e.k, e.v, ft_strlen(e.k), free);
+			ht_add(g_sh.env, e.k, e.v, ft_strlen(e.k));
 		e.v = NULL;
 	}
 	return (ex.ret);

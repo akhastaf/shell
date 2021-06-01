@@ -19,14 +19,14 @@ static void	set_lastcmd(void)
 	char	*lstcmd;
 
 	i = 1;
-	lstcmd = ft_getpath(ft_strdup("ENV"));
+	lstcmd = ft_getpath(ft_strdup("ENV"), 0);
 	l = ft_strlen(lstcmd);
 	while (i < 4)
 	{
 		lstcmd[l - i] = ft_tolower(lstcmd[l - i]);
 		i++;
 	}
-	ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1, free);
+	ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1);
 }
 
 int	builtins_env(char **arg)

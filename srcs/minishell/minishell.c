@@ -6,11 +6,19 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:06:58 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/26 15:48:27 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:59:04 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	reset_sh(void)
+{
+	free(g_sh.line);
+	g_sh.line = NULL;
+	g_sh.pid = -1;
+	g_sh.error = 0;
+}
 
 void	minishell_loop(void)
 {
@@ -26,7 +34,7 @@ void	minishell_loop(void)
 		error = check_syntax();
 		if (error)
 		{
-			printf("%s\n", error);
+			ft_putendl_fd(error, 2);
 			g_sh.status = 258;
 		}
 		else
@@ -35,10 +43,7 @@ void	minishell_loop(void)
 			execute();
 			ft_lstclear(&(g_sh.pipeline), delete_pipe);
 		}
-		free(g_sh.line);
-		g_sh.line = NULL;
-		g_sh.pid = 0;
-		g_sh.error = 0;
+		reset_sh();
 	}
 }
 

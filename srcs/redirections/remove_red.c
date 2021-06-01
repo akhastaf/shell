@@ -62,7 +62,6 @@ char	*remove_red(char *cmd)
 		}
 	}
 	new[j] = 0;
-	if (cmd)
-		free(cmd);
+	ft_free(&cmd);
 	return (new);
 }

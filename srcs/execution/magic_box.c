@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 15:48:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/26 16:10:46 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:43:28 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,34 @@ static void	execute_nonpipeline(t_list **tmp)
 	}
 }
 
+static	void	execute_nonbuiltins(t_list *p)
+{
+	if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path)
+		&& execve(((t_cmd *)p->data)->path,
+			((t_cmd *)p->data)->arg, ht_totable(g_sh.env)))
+		check_execute_errors(p->data, errno);
+}
+
 static void	execute_pipeline(t_list *p)
 {
 	while (p)
 	{
 		g_sh.is_pipe = 1;
 		g_sh.pid = fork();
-		if (g_sh.is_pipe < 0)
+		if (g_sh.pid < 0)
 			return ;
 		if (!g_sh.pid)
 		{
 			setup_pipe(p);
 			setup_redirection(p->data);
-			if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path) && ft_isbuiltins(((t_cmd *)p->data)->path))
+			if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path)
+				&& ft_isbuiltins(((t_cmd *)p->data)->path))
 			{
 				execute_builtins(((t_cmd *)p->data)->path,
 					((t_cmd *)p->data)->arg);
 				exit(g_sh.status);
 			}
-			if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path) && execve(((t_cmd *)p->data)->path,
-					((t_cmd *)p->data)->arg, ht_totable(g_sh.env)))
-				check_execute_errors(p->data, errno);
+			execute_nonbuiltins(p);
 			exit(0);
 		}
 		close(((t_cmd *)p->data)->pipe[1]);
@@ -58,7 +65,6 @@ static void	execute_pipeline(t_list *p)
 void	magic_box(t_pipeline *p)
 {
 	t_list	*tmp;
-	fun_ptr	*f;
 
 	tmp = p->cmd;
 	if (!(tmp->next))

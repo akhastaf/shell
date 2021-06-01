@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 18:49:29 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:29:24 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	builtins_echo(char **arg)
 {
 	int		n;
 	int		i;
-	
+
 	n = check_dashn(arg, &i);
 	while (arg[++i])
 	{

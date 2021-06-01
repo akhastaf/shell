@@ -24,5 +24,5 @@ void	ft_set_pwd(void)
 		if (!pwd)
 			pwd = ft_strdup("");
 	}
-	ht_replace(g_sh.env, ft_strdup("PWD"), pwd, 3, free);
+	ht_replace(g_sh.env, ft_strdup("PWD"), pwd, 3);
 }

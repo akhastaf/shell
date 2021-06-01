@@ -14,6 +14,7 @@
 
 void	ft_free(char **s)
 {
-	free(*s);
+	if (*s)
+		free(*s);
 	*s = NULL;
 }

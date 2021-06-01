@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_argmap(char ***arg, char *(*map)(char *))
+void	ft_argmap(char ***arg, char *(*map)(char *, int))
 {
 	int		i;
 	char	*tmp;
@@ -20,7 +20,7 @@ void	ft_argmap(char ***arg, char *(*map)(char *))
 	i = 0;
 	while ((*arg)[i])
 	{
-		(*arg)[i] = map((*arg)[i]);
+		(*arg)[i] = map((*arg)[i], 0);
 		tmp = (*arg)[i];
 		(*arg)[i] = ft_strtrim((*arg)[i], " \t");
 		free(tmp);

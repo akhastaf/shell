@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:43:17 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:45:32 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 17:23:53 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,31 @@ t_list	*get_values(t_hash_table *ht)
 		i++;
 	}
 	return (new);
+}
+
+void	ht_delmultiple(t_list *tmp, void *k, void (*del)(void*))
+{
+	while (tmp)
+	{
+		if (!ft_strncmp(k, ((t_key_value *)tmp->data)->key,
+				ft_strlen(((t_key_value *)tmp->data)->key)))
+		{
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			else
+			{
+				tmp = tmp->next;
+				tmp->prev = NULL;
+			}
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
+			else
+				tmp->prev->next = NULL;
+			del(((t_key_value *)tmp->data)->key);
+			del(((t_key_value *)tmp->data)->value);
+			tmp = NULL;
+			break ;
+		}
+		tmp = tmp->next;
+	}
 }

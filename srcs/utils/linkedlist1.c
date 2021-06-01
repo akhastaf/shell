@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:37:57 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:40:45 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/01 17:10:07 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,31 @@ void	sort_list(t_list **lst)
 		}
 		tmp = tmp->next;
 	}
+}
+
+char	**ft_lst_totable(t_list *tmp1, t_list *tmp2)
+{
+	char	**t;
+	int		len;
+	int		i;
+
+	len = ft_lstsize(tmp1);
+	t = malloc(sizeof(char *) * (len + 1));
+	if (!t)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (tmp1->data && tmp2->data)
+		{
+			t[i] = ft_strdup(tmp1->data);
+			t[i] = ft_strappend(t[i], '=');
+			t[i] = ft_strjoin(t[i], ft_strdup(tmp2->data));
+			i++;
+		}
+		tmp1 = tmp1->next;
+		tmp2 = tmp2->next;
+	}
+	t[i] = NULL;
+	return (t);
 }

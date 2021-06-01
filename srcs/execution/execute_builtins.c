@@ -14,7 +14,7 @@
 
 void	execute_builtins(char *path, char **arg)
 {
-	fun_ptr	*f;
+	t_fun_ptr	*f;
 
 	f = get_value(g_sh.builtins, path);
 	g_sh.status = f(arg);
