@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:34:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 15:38:24 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/02 14:26:41 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*trim_path(char *file)
 
 static int	check_builtins(char *file, int *i)
 {
-	*i = 0;
+	*i = -1;
 	if (ft_is_empty(file) || file[0] == '.' || ft_isbuiltins(file)
 		|| !ft_checkenv("PATH") || ft_strchr(file, '/'))
 		return (1);

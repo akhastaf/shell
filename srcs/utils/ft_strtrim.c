@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/01 20:11:54 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/01 20:13:04 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static size_t	ft_strstart(char *s, char *set)
@@ -31,7 +43,7 @@ static size_t	ft_strend(char *s, char *set)
 	j = 0;
 	while (i)
 	{
-		if (s[i] == set[j] && set[j])
+		if (s[i] == set[j] && s[ternary(i - 1 > 0, i - 1, 1)] != '\\' && set[j])
 		{
 			j = 0;
 			i--;

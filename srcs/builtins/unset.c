@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/10 13:10:03 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:13:21 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,19 @@ int	builtins_unset(char **arg)
 	ret = 0;
 	while (arg[i])
 	{
-		if (ft_strchr(arg[i], ' ') || ft_strchr(arg[i], '=')
-			|| ft_is_empty(arg[i]))
+		if (!ft_strcmp(arg[i], "PWD"))
+			g_sh.is_pwd = 0;
+		if (!ft_strcmp(arg[i], "OLDPWD"))
+			g_sh.is_oldpwd = 0;
+		if (ft_strchr(arg[i], ' ') || !ft_isvalidarg(arg[i])
+			|| ft_is_empty(arg[i]) || ft_strchr(arg[i], '+'))
 		{
-			printf("minishell: unset: `%s': not a valid identifier", arg[i]);
+			ft_puterror("minishell: unset: `", arg[i],
+				"': not a valid identifier");
 			ret = 1;
 		}
-		else
-			ht_delone(g_sh.env, arg[i], ft_strlen(arg[i]), free);
+		else if (ft_checkenv(arg[i]))
+			ht_delone(g_sh.env, arg[i], free);
 		i++;
 	}
 	return (ret);

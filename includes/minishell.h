@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/01 20:14:19 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/06 17:36:00 by akhastaf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "./struct.h"
@@ -49,7 +61,7 @@ int			builtins_cd(char **arg);
 int			builtins_exit(char **arg);
 int			builtins_export(char **arg);
 int			check_varenv(char *var);
-void		init_export(t_kv *e, char **tmp, t_ex *ex);
+void		init_export(char **tmp, t_ex *ex);
 char		*ft_getenv(char *var);
 int			ft_checkenv(char *var);
 char		*ft_getpath(char *file, int i);

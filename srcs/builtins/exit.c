@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:31 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 18:56:52 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:54:31 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	builtins_exit(char **arg)
 		if (check_manyargs(arg))
 			return (1);
 		ret = ret % 256;
-		ft_putendl_fd("exit", 1);
+		if (!g_sh.is_pipe)
+			ft_putendl_fd("exit", 1);
 		exit(ret);
 	}
 	if (!g_sh.is_pipe)

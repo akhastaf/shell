@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:08:17 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 16:21:36 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:55:44 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	add_hist(char *s)
 {
-	t_list	*new;
-
 	if (!s || !*s)
 		return ;
 	ft_lstadd_front(&(g_sh.hist), ft_lstnew(strdup(s)));

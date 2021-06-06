@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 15:31:57 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:45:17 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,24 @@ static void	print_export(char **arg)
 	}
 }
 
-static void	check_var(char *var, char *arg, int *ret)
+static void	check_var(t_ex *ex, char *arg, int *ret)
 {
-	if (ft_isdigit(var[0]) || ft_isstrnchr(var, " -|!;&$@\\'\"")
-		|| ft_is_empty(var))
+	char	*tmp;
+
+	ex->n = ft_strchrn(arg, '=');
+	tmp = ex->v;
+	ex->v = ft_strjoin(ex->v, arg + ex->n + 1);
+	free(tmp);
+	if (ft_isdigit(ex->k[0]) || !ft_isvalidarg(ex->k)
+		|| ft_is_empty(ex->k))
 	{
-		printf("minishell: export: `%s': not a valid identifier", arg);
+		ft_puterror("minishell: export: `", arg, "': not a valid identifier");
 		*ret = 1;
 	}
+	if (!ft_strcmp(ex->k, "OLDPWD"))
+		g_sh.is_oldpwd = 1;
+	if (!ft_strcmp(ex->k, "PWD"))
+		g_sh.is_pwd = 1;
 }
 
 static void	check_plus(char **arg, int i, char **var, char **val)
@@ -62,41 +72,50 @@ static void	check_plus(char **arg, int i, char **var, char **val)
 		*var = ft_strdup(arg[i]);
 }
 
-static void	check_validarg(char *arg, t_ex *ex)
+static int	check_validarg(char *arg, t_ex *ex)
 {
-	if (arg[0] == '=' || (ex->n && ex->n < ft_strchrn(arg, '=')
-			&& arg[ex->n + 1] != '='))
+	int		n;
+	char	*key;
+
+	ex->n = ft_strchrn(arg, '+');
+	n = ft_strchrn(arg, '=');
+	if (n)
+		key = ft_strndup(arg, n);
+	else
+		key = ft_strdup(arg);
+	if (!ft_isvalidarg(key) || key[0] == '+' || ft_is_empty(key))
 	{
-		printf("minishell: export: `%s': not a valid identifier", arg);
-		ex->ret = 1;
+		ft_puterror("minishell: export: `", arg, "': not a valid identifier");
+		free(key);
+		return (1);
 	}
+	free(key);
+	return (0);
 }
 
 int	builtins_export(char **arg)
 {
 	int		i;
 	t_ex	ex;
-	t_kv	e;
 	char	*tmp;
 
-	init_export(&e, &tmp, &ex);
+	init_export(&tmp, &ex);
 	print_export(arg);
 	i = 0;
 	while (arg[++i])
 	{
-		ex.n = ft_strchrn(arg[i], '+');
-		check_validarg(arg[i], &ex);
-		check_plus(arg, i, &(e.k), &(e.v));
-		ex.n = ft_strchrn(arg[i], '=');
-		tmp = e.v;
-		e.v = ft_strjoin(e.v, arg[i] + ex.n + 1);
-		free(tmp);
-		check_var(e.k, arg[i], &(ex.ret));
-		if (!(ex.n) && !ft_isstrnchr(e.k, " |!;&$@\\'\""))
-			insert_to_table(g_sh.env, e.k, NULL, ft_strlen(e.k));
-		else if (!ft_isstrnchr(e.k, " |!;&$@\\'\""))
-			ht_add(g_sh.env, e.k, e.v, ft_strlen(e.k));
-		e.v = NULL;
+		if (check_validarg(arg[i], &ex))
+			return (1);
+		check_plus(arg, i, &(ex.k), &(ex.v));
+		check_var(&ex, arg[i], &(ex.ret));
+		if (!(ex.n) && ft_isvalidarg(ex.k))
+		{
+			insert_to_table(g_sh.env, ex.k, NULL);
+			free(ex.v);
+		}
+		else if (ft_isvalidarg(ex.k))
+			ht_add(g_sh.env, ex.k, ex.v);
+		ex.v = NULL;
 	}
-	return (ex.ret);
+	return (0);
 }

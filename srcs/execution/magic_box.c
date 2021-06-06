@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 15:48:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 15:43:28 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:30:34 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	magic_box(t_pipeline *p)
 	g_sh.is_pipe = 0;
 	close_pipe(p);
 	waitpid(g_sh.pid, &g_sh.status, 0);
-	if (WIFSIGNALED(g_sh.status))
+	if (g_sh.pid > 0 && (g_sh.status) && WIFSIGNALED(g_sh.status))
 		g_sh.status = 128 + WTERMSIG(g_sh.status);
-	else
+	else if (g_sh.pid > 0)
 		g_sh.status = WEXITSTATUS(g_sh.status);
 	while (wait(NULL) > 0)
 		;

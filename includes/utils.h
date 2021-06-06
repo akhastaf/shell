@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 15:15:00 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 17:24:52 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:51:53 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,22 @@ t_list			*ft_lstnew(void *data);
 int				ft_lstsize(t_list *lst);
 void			ft_lstprint(t_list *lst);
 void			sort_list(t_list **lst);
-char			**ft_lst_totable(t_list *tmp1, t_list *tmp2);
+char			**ft_lst_totable(t_list *tmp1, t_list *tmp2, int len);
 void			init_hashtable(t_hash_table **ht, size_t lenght);
-void			insert_to_table(t_hash_table *ht, void *k, void *v,
-					size_t size);
+void			insert_to_table(t_hash_table *ht, void *k, void *v);
 void			*get_value(t_hash_table *ht, void *key);
 t_key_value		*get_key_value(t_hash_table *ht, void *key);
 t_list			*get_keys(t_hash_table *ht);
 t_list			*get_values(t_hash_table *ht);
 void			clear_hashtable(t_hash_table **ht, void (*del)(void*));
-void			ht_replace(t_hash_table *ht, void *k, void *v, size_t size);
-void			ht_delone(t_hash_table *ht, void *k, size_t size,
-					void (*del)(void*));
+void			ht_replace(t_hash_table *ht, void *k, void *v);
+void			ht_delone(t_hash_table *ht, void *k, void (*del)(void*));
 void			ht_delmultiple(t_list *tmp, void *k, void (*del)(void*));
-void			ht_add(t_hash_table *ht, void *k, void *v, size_t size);
+void			ht_add(t_hash_table *ht, void *k, void *v);
 void			print_ht(t_hash_table *ht);
 char			**ht_totable(t_hash_table *ht);
-unsigned int	hash_code(const void *key, int lenght);
+int				hash_code(const void *key, int lenght);
+int				is_key(t_hash_table *ht, void *k);
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
@@ -99,5 +98,5 @@ void			ft_free(char **s);
 void			ft_skip_space(char *str, int *i);
 int				is_seperator(char *s, int i, char *set);
 void			*ft_dealocate(char ***t, int i);
-int				ft_isalnum(int c);
+int				ft_isvalidarg(char *s);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 11:22:39 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:56:55 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:59:40 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	skip_space(char *str)
 {
 	int	i;
 
+	i = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
 		i++;
 	return (i);

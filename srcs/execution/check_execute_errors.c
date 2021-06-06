@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 15:47:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 15:54:26 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:35:36 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_execute_errors(t_cmd *cmd, int err)
 		is_dir(cmd->path, &path, dir);
 	else if ((!path || ft_is_empty(path)) && stat(spath, &sb))
 		not_dir(cmd->path, &path);
-	else if (err == 2 || dir)
+	else if (err == 2 || err == 8 || dir)
 		cmd_not_found(cmd->path, &path);
 	else if (err != 8)
 		access_deined(cmd->path, &path);

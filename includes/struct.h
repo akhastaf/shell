@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 14:53:45 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 15:05:35 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:45:43 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@
 
 typedef int	t_fun_ptr(char **);
 
-typedef struct s_kv
+typedef struct s_ex
 {
 	char	*k;
 	char	*v;
-}			t_kv;
-
-typedef struct s_ex
-{
-	int	n;
-	int	ret;
+	int		n;
+	int		ret;
 }		t_ex;
 
 typedef struct s_tc
@@ -103,5 +99,7 @@ typedef struct s_sh
 	int				is_pipe;
 	char			*oldpwd;
 	char			*pwd;
+	int				is_pwd;
+	int				is_oldpwd;
 }					t_sh;
 #endif

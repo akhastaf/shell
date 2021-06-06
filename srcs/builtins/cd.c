@@ -6,13 +6,13 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:09 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 16:35:48 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:16:08 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_oldpwd(void)
+char	*get_oldpwd(void)
 {
 	char	*oldpwd;
 
@@ -38,7 +38,10 @@ static int	missing_arg(char *arg, char **str, char **oldpwd)
 	}
 	else if (*str[0] == '\0' && *oldpwd)
 	{
-		ht_add(g_sh.env, ft_strdup("OLDPWD"), *oldpwd, 6);
+		if (g_sh.is_oldpwd)
+			ht_add(g_sh.env, ft_strdup("OLDPWD"), *oldpwd);
+		else
+			g_sh.oldpwd = *oldpwd;
 		return (1);
 	}
 	return (0);
@@ -69,40 +72,42 @@ void	set_pwd(char *str)
 	 pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		printf("cd: error retrieving current directory: getcwd: cannot \
-				access parent directories: %s\n", strerror(errno));
+		ft_putstr_fd("cd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		pwd = ft_getenv("PWD");
 		pwd = ft_strappend(pwd, '/');
 		tmp = pwd;
 		pwd = ft_strjoin(pwd, str);
 		free(tmp);
 	}
-	ht_add(g_sh.env, ft_strdup("PWD"), pwd, 3);
+	if (g_sh.is_pwd)
+		ht_add(g_sh.env, ft_strdup("PWD"), pwd);
+	else
+		g_sh.pwd = pwd;
 }
 
 int	builtins_cd(char **arg)
 {
 	char	*oldpwd;
-	char	*pwd;
 	char	*str;
-	char	*tmp;
 
-	str = ft_strdup(arg[1]);
-	if (missing_arg(arg[1], &str, &oldpwd))
-		return (1);
-	if (get_home(&str))
+	if (arg[1])
+		str = ft_strdup(arg[1]);
+	if (missing_arg(arg[1], &str, &oldpwd) || get_home(&str))
 		return (1);
 	if (!chdir(str))
 	{
 		set_pwd(str);
-		if (oldpwd)
-			ht_add(g_sh.env, ft_strdup("OLDPWD"), oldpwd, 6);
+		if (oldpwd && g_sh.is_oldpwd)
+			ht_add(g_sh.env, ft_strdup("OLDPWD"), oldpwd);
+		else if (oldpwd && !g_sh.is_oldpwd)
+			g_sh.oldpwd = oldpwd;
 	}
 	else
 	{
 		printf("minishell: cd: %s : %s\n", str, strerror(errno));
-		if (!arg[1])
-			free(str);
+		free(str);
 		return (1);
 	}
 	free(str);

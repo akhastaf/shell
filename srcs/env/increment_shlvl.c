@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:42:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/28 17:44:37 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:12:55 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ void	increment_shlvl(void)
 	else if (value < 0)
 		value = -1;
 	v = ft_itoa(value + 1);
-	ht_replace(g_sh.env, ft_strdup("SHLVL"), v, 5);
+	ht_replace(g_sh.env, ft_strdup("SHLVL"), v);
 }

@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:21:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/26 17:44:27 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:58:09 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_cmd	*init_cmd(char *c)
 {
 	t_cmd	*cmd;
 	char	**arg;
-	char	*tmp;
 
 	c = ft_refactor_line(c);
 	cmd = malloc(sizeof(t_cmd));
@@ -25,7 +24,7 @@ static t_cmd	*init_cmd(char *c)
 	cmd->red = get_redirection(c);
 	c = remove_red(c);
 	arg = ft_split(c, " ");
-	if (!arg)
+	if (!arg || !arg[0])
 		arg = ft_split("\t\t", " ");
 	cmd->path = ft_getpath(ft_strdup(arg[0]), 0);
 	ft_argmap(&arg, ft_putbackslash);
@@ -40,7 +39,6 @@ static t_cmd	*init_cmd(char *c)
 
 void	process_pipeline(t_pipeline *p)
 {
-	char	**arg;
 	char	**cmds;
 	t_cmd	*cmd;
 	int		i;

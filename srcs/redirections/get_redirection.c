@@ -6,16 +6,16 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 14:05:28 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 16:44:57 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:06:33 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	init(char **type, t_list **redlist, int *i)
+static void	init(char **type, t_list **redlist, size_t *i)
 {
 	*type = NULL;
-	*i = 0;
+	*i = -1;
 	*redlist = NULL;
 }
 
@@ -31,7 +31,7 @@ static t_red	*init_red(char *file, char *type)
 	return (red);
 }
 
-static char	*get_file(char *cmd, char *type, int *i)
+static char	*get_file(char *cmd, char *type, size_t *i)
 {
 	char	*tmp;
 	char	*file;
@@ -51,7 +51,7 @@ static char	*get_file(char *cmd, char *type, int *i)
 	return (file);
 }
 
-static char	*get_type(char *cmd, int *i)
+static char	*get_type(char *cmd, size_t *i)
 {
 	char	*type;
 
@@ -71,7 +71,7 @@ static char	*get_type(char *cmd, int *i)
 
 t_list	*get_redirection(char *cmd)
 {
-	int		i;
+	size_t	i;
 	char	*type;
 	t_red	*red;
 	t_list	*redlist;

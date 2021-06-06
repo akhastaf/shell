@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:08:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:29:05 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:57:35 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*check_minus(char *s, char *line, int i)
 	return (NULL);
 }
 
-static char	*check_home(char *s, char *line, int i)
+static char	*check_home(char *line)
 {
 	char	*tmp;
 	char	*tmp1;
@@ -63,7 +63,6 @@ static char	*check_home(char *s, char *line, int i)
 char	*ft_tilde(char *s, char *line, int i)
 {
 	char	*tmp;
-	char	*tmp1;
 
 	tmp = check_plus(s, line, i);
 	if (tmp)
@@ -77,6 +76,6 @@ char	*ft_tilde(char *s, char *line, int i)
 		line = ft_strappend(line, s[i + 1]);
 	}
 	else
-		return (check_home(s, line, i));
+		return (check_home(line));
 	return (line);
 }

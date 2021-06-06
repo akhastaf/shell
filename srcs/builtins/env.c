@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:16 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 18:47:47 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:12:49 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ static void	set_lastcmd(void)
 		lstcmd[l - i] = ft_tolower(lstcmd[l - i]);
 		i++;
 	}
-	ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1);
+	ht_replace(g_sh.env, ft_strdup("_"), lstcmd);
 }
 
 int	builtins_env(char **arg)
 {
-	int		i;
+	size_t	i;
 	t_list	*tmp;
 
+	(void)arg;
 	set_lastcmd();
 	i = 0;
 	while (i < g_sh.env->lenght)

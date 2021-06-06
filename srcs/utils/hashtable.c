@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:50:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:55:24 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:58:50 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_hashtable(t_hash_table **ht, size_t lenght)
 	}
 }
 
-unsigned int	hash_code(const void *key, int lenght)
+int	hash_code(const void *key, int lenght)
 {
 	unsigned int	code;
 	unsigned char	*k;
@@ -50,11 +50,11 @@ unsigned int	hash_code(const void *key, int lenght)
 	return (code % lenght);
 }
 
-void	insert_to_table(t_hash_table *ht, void *k, void *v, size_t size)
+void	insert_to_table(t_hash_table *ht, void *k, void *v)
 {
-	unsigned int	id;
-	t_list			*new;
-	t_key_value		*kv;
+	int			id;
+	t_list		*new;
+	t_key_value	*kv;
 
 	kv = malloc(sizeof(t_key_value));
 	if (!kv)
@@ -73,7 +73,7 @@ void	insert_to_table(t_hash_table *ht, void *k, void *v, size_t size)
 
 void	*get_value(t_hash_table *ht, void *key)
 {
-	unsigned int	id;
+	int				id;
 	t_list			*tmp;
 
 	id = hash_code(key, ht->lenght);
@@ -93,7 +93,7 @@ void	*get_value(t_hash_table *ht, void *key)
 
 t_key_value	*get_key_value(t_hash_table *ht, void *key)
 {
-	unsigned int	id;
+	int				id;
 	t_list			*tmp;
 
 	id = hash_code(key, ht->lenght);

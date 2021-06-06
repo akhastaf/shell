@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:43:05 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:29:51 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 16:13:27 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_cmd	*get_lstcmd(t_list *cmd)
 	lstcmd = NULL;
 	if (cmd->next)
 	{
-		ht_delone(g_sh.env, "_", 1, free);
+		ht_delone(g_sh.env, "_", free);
 		return (NULL);
 	}
 	if (!ft_strcmp(((t_cmd *)cmd->data)->path, "echo")
@@ -39,7 +39,6 @@ void	ft_set_lstcmd(t_list *cmd)
 	int		l;
 	char	*lstcmd;
 	t_cmd	*lcmd;
-	char	*tmp;
 
 	n = 0;
 	l = 0;
@@ -56,6 +55,6 @@ void	ft_set_lstcmd(t_list *cmd)
 			lstcmd = ft_strdup(lcmd->path);
 		else
 			lstcmd = ft_strdup(lcmd->arg[n]);
-		ht_replace(g_sh.env, ft_strdup("_"), lstcmd, 1);
+		ht_replace(g_sh.env, ft_strdup("_"), lstcmd);
 	}
 }

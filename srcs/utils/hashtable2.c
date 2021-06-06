@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:43:17 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 17:23:53 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:11:51 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,23 @@ void	ht_delmultiple(t_list *tmp, void *k, void (*del)(void*))
 		}
 		tmp = tmp->next;
 	}
+}
+
+int	is_key(t_hash_table *ht, void *k)
+{
+	int		id;
+	t_list	*tmp;
+
+	id = hash_code(k, ht->lenght);
+	if (id < 0)
+		return (0);
+	tmp = ht->backets[id];
+	while (tmp)
+	{
+		if (!ft_strncmp(k, ((t_key_value *)tmp->data)->key,
+				ft_strlen(((t_key_value *)tmp->data)->key)))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

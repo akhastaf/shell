@@ -6,13 +6,13 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:42:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 17:04:43 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:09:46 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ht_replace(t_hash_table *ht, void *k, void *v, size_t size)
+void	ht_replace(t_hash_table *ht, void *k, void *v)
 {
 	t_key_value	*key_val;
 	char		*tmp;
@@ -26,14 +26,13 @@ void	ht_replace(t_hash_table *ht, void *k, void *v, size_t size)
 		free(k);
 	}
 	else
-		insert_to_table(ht, k, v, size);
+		insert_to_table(ht, k, v);
 }
 
-void	ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
+void	ht_delone(t_hash_table *ht, void *k, void (*del)(void*))
 {
-	unsigned int	id;
-	t_list			*tmp;
-	t_list			*p;
+	int		id;
+	t_list	*tmp;
 
 	id = hash_code(k, ht->lenght);
 	if (id == -1)
@@ -52,18 +51,18 @@ void	ht_delone(t_hash_table *ht, void *k, size_t size, void (*del)(void*))
 		ht_delmultiple(tmp, k, del);
 }
 
-void	ht_add(t_hash_table *ht, void *k, void *v, size_t size)
+void	ht_add(t_hash_table *ht, void *k, void *v)
 {
-	if (get_value(ht, k))
-		ht_replace(ht, k, v, size);
+	if (get_value(ht, k) || is_key(ht, k))
+		ht_replace(ht, k, v);
 	else
-		insert_to_table(ht, k, v, size);
+		insert_to_table(ht, k, v);
 }
 
 int	count_table(t_hash_table *ht)
 {
 	t_list	*tmp;
-	int		i;
+	size_t	i;
 	int		j;
 
 	i = 0;
@@ -88,5 +87,5 @@ char	**ht_totable(t_hash_table *ht)
 
 	tmp1 = get_keys(ht);
 	tmp2 = get_values(ht);
-	return (ft_lst_totable(tmp1, tmp2));
+	return (ft_lst_totable(tmp1, tmp2, ft_lstsize(tmp2)));
 }

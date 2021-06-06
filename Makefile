@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 17:27:32 by akhastaf          #+#    #+#              #
-#    Updated: 2021/04/28 16:57:46 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/06/06 15:50:30 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ SRC = ./srcs/builtins/cd.c \
 		./srcs/utils/ft_delete_arg.c \
 		./srcs/utils/ft_free.c \
 		./srcs/utils/ft_is_empty.c \
-		./srcs/utils/ft_isalnum.c \
+		./srcs/utils/ft_isvalidarg.c \
 		./srcs/utils/ft_is_space.c \
 		./srcs/utils/ft_isdigit.c \
 		./srcs/utils/ft_itoa.c \
@@ -118,10 +118,10 @@ OBJ = minishell
 all: $(NAME)
 
 $(NAME):
-	@$(C) -g -o $(NAME) main.c $(SRC) -ltermcap
+	@$(C) $(FLAGS) -o $(NAME) main.c $(SRC) -ltermcap
 
 debug:
-	@$(C) -g -o $(NAME) main.c $(SRC) -ltermcap -fsanitize=address 
+	@$(C) $(FLAGS) -g -o $(NAME) main.c $(SRC) -ltermcap -fsanitize=address 
 
 clean:
 	@rm -f $(NAME)

@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/29 15:34:09 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:56:01 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	*ft_refactor_line(char *s)
 {
 	char	*line;
 	int		i;
-	int		j;
 	int		q;
 	int		sq;
 
