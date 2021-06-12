@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 17:45:17 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/12 17:54:59 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static void	check_var(t_ex *ex, char *arg, int *ret)
 	tmp = ex->v;
 	ex->v = ft_strjoin(ex->v, arg + ex->n + 1);
 	free(tmp);
-	if (ft_isdigit(ex->k[0]) || !ft_isvalidarg(ex->k)
-		|| ft_is_empty(ex->k))
+	if (ft_isdigit(ex->k[0]))
 	{
 		ft_puterror("minishell: export: `", arg, "': not a valid identifier");
 		*ret = 1;
@@ -105,17 +104,17 @@ int	builtins_export(char **arg)
 	while (arg[++i])
 	{
 		if (check_validarg(arg[i], &ex))
-			return (1);
+			ex.ret = 1;
 		check_plus(arg, i, &(ex.k), &(ex.v));
 		check_var(&ex, arg[i], &(ex.ret));
-		if (!(ex.n) && ft_isvalidarg(ex.k))
+		if (ex.n && ft_isvalidarg(ex.k) && !ex.v)
 		{
-			insert_to_table(g_sh.env, ex.k, NULL);
+			ht_replace(g_sh.env, ex.k, NULL);
 			free(ex.v);
 		}
-		else if (ft_isvalidarg(ex.k))
-			ht_add(g_sh.env, ex.k, ex.v);
+		else if (ex.n && ft_isvalidarg(ex.k))
+			ht_replace(g_sh.env, ex.k, ex.v);
 		ex.v = NULL;
 	}
-	return (0);
+	return (ex.ret);
 }

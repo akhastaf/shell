@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:09 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 16:16:08 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/07 14:48:51 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	missing_arg(char *arg, char **str, char **oldpwd)
 		if (!(*str))
 		{
 			ft_putendl_fd("minishell: cd: HOME not set", 1);
+			free(*oldpwd);
 			return (1);
 		}
 	}

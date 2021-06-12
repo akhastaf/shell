@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 15:56:01 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/07 14:55:36 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 static void	find_status(char **line, char *s, int *i)
 {
 	char	*tmp;
+	char	*val;
 
 	if (s[*i + 1] == '?')
 	{
 		tmp = *line;
-		*line = ft_strjoin(*line, ft_itoa(g_sh.status));
+		val = ft_itoa(g_sh.status);
+		*line = ft_strjoin(*line, val);
 		free(tmp);
+		free(val);
 		(*i)++;
 	}
 }
@@ -46,10 +49,10 @@ static void	find_dollar(char **line, char *s, int *i)
 			free(str);
 			free(tmp);
 			*i = *i + ft_strlen(var);
-			free(var);
 		}
 		else
 			*line = ft_strappend(*line, s[*i]);
+		free(var);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 16:13:21 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:32:26 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtins_unset(char **arg)
 				"': not a valid identifier");
 			ret = 1;
 		}
-		else if (ft_checkenv(arg[i]))
+		else if (is_key(g_sh.env, arg[i]))
 			ht_delone(g_sh.env, arg[i], free);
 		i++;
 	}

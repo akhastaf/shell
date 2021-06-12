@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 11:17:01 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 18:03:15 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/12 18:03:43 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	init_env(char **env)
 		insert_to_table(g_sh.env, key, val);
 		i++;
 	}
+	if (!is_key(g_sh.env, "OLDPWD"))
+		insert_to_table(g_sh.env, ft_strdup("OLDPWD"), NULL);
 }
 
 void	init_builtins(void)
