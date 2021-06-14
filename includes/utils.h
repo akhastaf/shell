@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 15:15:00 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 16:51:53 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:45:00 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ void			ft_puterror(char *f, char *ar, char *l);
 void			ft_argprint(char **arg);
 int				ternary(int condition, int ret1, int ret2);
 void			ft_argmap(char ***arg, char *(*map)(char *, int));
-void			ft_quotes(char c, int *q, int *sq);
+void			ft_quotes(char *c, int i, int *q, int *sq);
 void			ft_free(char **s);
 void			ft_skip_space(char *str, int *i);
 int				is_seperator(char *s, int i, char *set);
 void			*ft_dealocate(char ***t, int i);
 int				ft_isvalidarg(char *s);
+void			increments(int *i, int *j);
 #endif

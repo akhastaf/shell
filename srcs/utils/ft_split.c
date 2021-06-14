@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 16:36:14 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 16:59:17 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 14:54:57 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ static void	init_split(int *i, int *j, int *wc)
 	*wc = 0;
 }
 
-static int	ft_wordscount(const char *str, char *set)
+static int	ft_wordscount(char *s, char *set)
 {
 	int		i;
 	int		wc;
-	char	*s;
 	int		len;
 
-	s = (char *)str;
 	i = -1;
 	wc = 0;
 	len = ft_strlen(s);
@@ -37,7 +35,8 @@ static int	ft_wordscount(const char *str, char *set)
 		if ((s[i] == 34 || s[i] == 39)
 			&& (s[ternary(i - 1 < 0, 0, i - 1)] != '\\'))
 		{
-			while (s[++i] != 34 && s[i] != 39
+			i++;
+			while (s[i] != 34 && s[i] != 39
 				&& s[ternary(i - 1 < 0, 0, i - 1)] != '\\' && s[i] != 0)
 				i++;
 		}
@@ -58,20 +57,21 @@ static size_t	ft_wordlen(char *s, char *set, int i)
 	while (i < len && (!is_seperator(s, i, set) || (is_seperator(s, i, set)
 				&& s[ternary(i - 1 < 0, 0, i - 1)] == '\\')) && s[i])
 	{
-		if ((s[i] == 34 || s[i] == 39)
-			&& (s[ternary(i - 1 < 0, 0, i - 1)] != '\\'))
+		if (s[i] == '"' && s[ternary(i - 1 < 0, 0, i - 1)] != '\\')
 		{
-			i++;
-			j++;
-			while (s[i] != 34 && s[i] != 39
-				&& s[ternary(i - 1 < 0, 0, i - 1)] != '\\' && s[i] != 0)
-			{
-				i++;
-				j++;
-			}
+			increments(&i, &j);
+			while (s[i] != '"' && !(s[i] == '"'
+					&& s[ternary(i - 1 < 0, 0, i - 1)] == '\\') && s[i])
+				increments(&i, &j);
 		}
-		j++;
-		i++;
+		else if (s[i] == '\'' && s[ternary(i - 1 < 0, 0, i - 1)] != '\\')
+		{
+			increments(&i, &j);
+			while (s[i] != '\'' && !(s[i] == '\''
+					&& s[ternary(i - 1 < 0, 0, i - 1)] == '\\') && s[i])
+				increments(&i, &j);
+		}
+		increments(&i, &j);
 	}
 	return (j);
 }

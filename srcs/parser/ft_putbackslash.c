@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:28:26 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 16:04:34 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:40:06 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,14 @@ char	*ft_putbackslash(char *s, int j)
 	char	*new;
 
 	init(&i, &q, &sq);
-	if (!s[0])
-		return (ft_strdup(s));
 	new = NULL;
 	while (s[++i])
 	{
-		ft_quotes(s[i], &q, &sq);
+		ft_quotes(s, i, &q, &sq);
 		if ((s[i] == '"' && sq) || (s[i] == '\\' && sq) || (s[i] == '\\'
 				&& s[i + 1] != '\\' && s[i + 1] != '"' && s[i + 1] != '\''
-				&& s[i + 1] != '$' && q))
+				&& s[i + 1] != '$' && q)
+			|| (s[i] == '\\' && s[i + 1] != '\\' && s[i + 1] != '"' && q))
 		{
 			new = ft_strappend(new, '\\');
 			j++;

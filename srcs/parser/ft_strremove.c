@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:38:00 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/01 16:38:21 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:35:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strremove(char *s, char c)
 	l = -1;
 	while (s[++l])
 	{
-		ft_quotes(s[l], &q, &sq);
+		ft_quotes(s, l, &q, &sq);
 		if (check_doubleq(s, l, sq, c))
 			new[i++] = s[l];
 		if ((c == '\'' && s[l] == c) && q)

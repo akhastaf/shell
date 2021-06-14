@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strappend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 11:42:41 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 11:59:49 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:33:39 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*ft_strappend(char *str, char c)
 		s[i] = str[i];
 	s[i++] = c;
 	s[i] = 0;
-	if (str)
-		free(str);
+	free(str);
 	return (s);
 }

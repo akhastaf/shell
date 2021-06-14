@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:42:12 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 17:09:46 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 13:26:03 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ht_delone(t_hash_table *ht, void *k, void (*del)(void*))
 	t_list	*tmp;
 
 	id = hash_code(k, ht->lenght);
-	if (id == -1)
+	if (id == -1 || !is_key(g_sh.env, "_"))
 		return ;
 	tmp = ht->backets[id];
 	if (!ft_strncmp(k, ((t_key_value *)tmp->data)->key,

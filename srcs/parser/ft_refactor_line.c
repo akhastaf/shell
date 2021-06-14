@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:18:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/07 14:55:36 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:26:22 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_refactor_line(char *s)
 	q = 0;
 	while (s[++i])
 	{
-		ft_quotes(s[i], &q, &sq);
+		ft_quotes(s, i, &q, &sq);
 		check_before_d(&line, s, &i, q);
 		if (s[i] == '$')
 			find_dollar(&line, s, &i);

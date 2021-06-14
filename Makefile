@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 17:27:32 by akhastaf          #+#    #+#              #
-#    Updated: 2021/06/06 15:50:30 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/06/13 15:46:40 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,8 @@ SRC = ./srcs/builtins/cd.c \
 		./srcs/utils/is_specialcar.c \
 		./srcs/utils/linkedlist.c \
 		./srcs/utils/linkedlist1.c \
-		./srcs/utils/ternary.c
+		./srcs/utils/ternary.c \
+		./srcs/utils/increments.c
 
 OBJ = minishell
 

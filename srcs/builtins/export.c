@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/12 17:54:59 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:58:55 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	print_export(char **arg)
 			printf("declare -x %s\n", tmp->data);
 		tmp = tmp->next;
 	}
+	ft_lstclear(&env, free);
 }
 
 static void	check_var(t_ex *ex, char *arg, int *ret)
@@ -42,7 +43,8 @@ static void	check_var(t_ex *ex, char *arg, int *ret)
 
 	ex->n = ft_strchrn(arg, '=');
 	tmp = ex->v;
-	ex->v = ft_strjoin(ex->v, arg + ex->n + 1);
+	if (ex->n)
+		ex->v = ft_strjoin(ex->v, arg + ex->n + 1);
 	free(tmp);
 	if (ft_isdigit(ex->k[0]))
 	{
@@ -107,13 +109,14 @@ int	builtins_export(char **arg)
 			ex.ret = 1;
 		check_plus(arg, i, &(ex.k), &(ex.v));
 		check_var(&ex, arg[i], &(ex.ret));
-		if (ex.n && ft_isvalidarg(ex.k) && !ex.v)
+		if (ft_isvalidarg(ex.k))
 		{
-			ht_replace(g_sh.env, ex.k, NULL);
-			free(ex.v);
-		}
-		else if (ex.n && ft_isvalidarg(ex.k))
+			if (!ex.n && !get_value(g_sh.env, ex.k))
+				ex.v = NULL;
 			ht_replace(g_sh.env, ex.k, ex.v);
+		}
+		else
+			free_ex(ex.k, ex.v);
 		ex.v = NULL;
 	}
 	return (ex.ret);

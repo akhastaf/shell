@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhastaf <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 12:14:41 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/25 12:25:36 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:26:57 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strnchr(char *s, char *set)
 	init(&i, &j, &q, &sq);
 	while (s[i + j])
 	{
-		ft_quotes(s[i], &q, &sq);
+		ft_quotes(s, i, &q, &sq);
 		while (s[i + j] && s[i + j] == set[j])
 		{
 			j++;
