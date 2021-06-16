@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:43:05 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 12:04:24 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:36:31 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static t_cmd	*get_lstcmd(t_list *cmd)
 	t_cmd	*lstcmd;
 
 	lstcmd = NULL;
+	if (!cmd || (!((t_cmd *)cmd->data)->path) || !(((t_cmd *)cmd->data)->arg))
+		return (lstcmd);
 	if (cmd->next)
 	{
 		ht_delone(g_sh.env, "_", free);
@@ -46,7 +48,7 @@ void	ft_set_lstcmd(t_list *cmd)
 	if (lcmd)
 	{
 		n = ft_argsize(lcmd->arg) - 1;
-		l = ft_strchrn(lcmd->arg[n], '=');
+		l = ft_strchrn(lcmd->arg[ternary(n > 0, n, 0)], '=');
 		if (!lcmd->arg[0])
 			lstcmd = strdup("");
 		else if (l)

@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:47:16 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 16:12:49 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:35:51 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	builtins_env(char **arg)
 		{
 			if (ft_strcmp(((t_key_value *)tmp->data)->key, "_"))
 			{
-				printf("%s=%s\n", (char *)((t_key_value *)tmp->data)->key,
-					(char*)((t_key_value *)tmp->data)->value);
+				ft_putstr_fd((char *)((t_key_value *)tmp->data)->key, 1);
+				ft_putstr_fd("=", 1);
+				ft_putendl_fd((char *)((t_key_value *)tmp->data)->value, 1);
 			}
 			tmp = tmp->next;
 		}

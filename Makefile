@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 17:27:32 by akhastaf          #+#    #+#              #
-#    Updated: 2021/06/13 15:46:40 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/06/16 15:31:16 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ SRC = ./srcs/builtins/cd.c \
 		./srcs/utils/ternary.c \
 		./srcs/utils/increments.c
 
-OBJ = minishell
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
@@ -125,7 +125,7 @@ debug:
 	@$(C) $(FLAGS) -g -o $(NAME) main.c $(SRC) -ltermcap -fsanitize=address 
 
 clean:
-	@rm -f $(NAME)
+	@rm -rf ./minishell.dSYM $(OBJ)
 
 fclean: clean
 		@rm -f $(NAME)

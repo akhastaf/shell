@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 15:48:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 17:30:34 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:26:27 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	execute_nonpipeline(t_list **tmp)
 
 static	void	execute_nonbuiltins(t_list *p)
 {
-	if (!g_sh.error && !ft_is_empty(((t_cmd *)p->data)->path)
+	if (!g_sh.error && (((t_cmd *)p->data)->path)
 		&& execve(((t_cmd *)p->data)->path,
 			((t_cmd *)p->data)->arg, ht_totable(g_sh.env)))
 		check_execute_errors(p->data, errno);

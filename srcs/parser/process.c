@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:21:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/06 15:58:09 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:19:18 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static t_cmd	*init_cmd(char *c)
 	c = remove_red(c);
 	arg = ft_split(c, " ");
 	if (!arg || !arg[0])
-		arg = ft_split("\t\t", " ");
-	cmd->path = ft_getpath(ft_strdup(arg[0]), 0);
-	ft_argmap(&arg, ft_putbackslash);
+		cmd->path = NULL;
+	else
+	{
+		cmd->path = ft_getpath(ft_strdup(arg[0]), 0);
+		ft_argmap(&arg, ft_putbackslash);
+	}
 	cmd->arg = arg;
 	cmd->fdin = -1;
 	cmd->fdout = -1;
