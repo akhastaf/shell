@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 20:14:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/13 11:32:13 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:44:44 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			builtins_exit(char **arg);
 int			builtins_export(char **arg);
 int			check_varenv(char *var);
 void		init_export(char **tmp, t_ex *ex);
+void		printe(char *v, char *data);
 void		free_ex(char *k, char *v);
 char		*ft_getenv(char *var);
 int			ft_checkenv(char *var);

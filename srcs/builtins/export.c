@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:41:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/13 15:58:55 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:47:35 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ static void	print_export(char **arg)
 	{
 		if (tmp->data)
 			value = get_value(g_sh.env, tmp->data);
-		if (value)
-			printf("declare -x %s=\"%s\"\n", tmp->data, value);
-		else
-			printf("declare -x %s\n", tmp->data);
+		printe(value, tmp->data);
 		tmp = tmp->next;
 	}
 	ft_lstclear(&env, free);
