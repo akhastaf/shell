@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 17:27:32 by akhastaf          #+#    #+#              #
-#    Updated: 2021/06/16 15:31:16 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/06/16 15:38:45 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,9 +120,6 @@ all: $(NAME)
 
 $(NAME):
 	@$(C) $(FLAGS) -o $(NAME) main.c $(SRC) -ltermcap
-
-debug:
-	@$(C) $(FLAGS) -g -o $(NAME) main.c $(SRC) -ltermcap -fsanitize=address 
 
 clean:
 	@rm -rf ./minishell.dSYM $(OBJ)
