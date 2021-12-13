@@ -93,6 +93,14 @@ int	check_red(void)
 					|| !g_sh.line[i]))
 				return (9);
 		}
+		else if (g_sh.line[i] == '<' && g_sh.line[i + 1] == '<')
+		{
+			i += 2;
+			ft_skip_space(g_sh.line, &i);
+			if (g_sh.line[i] != '$' && (is_specialcar(g_sh.line[i])
+					|| !g_sh.line[i]))
+				return (9);
+		}
 		else if (g_sh.line[i] == '>' || g_sh.line[i] == '<')
 		{
 			i++;

@@ -23,6 +23,7 @@ static void	is_dir(char *bin, char **path, DIR *dir)
 
 static void	not_dir(char *bin, char **path)
 {
+	ft_putendl_fd("here", 2);
 	ft_puterror("minishell: ", bin, ": No such file or directory");
 	if (*path)
 		free(*path);

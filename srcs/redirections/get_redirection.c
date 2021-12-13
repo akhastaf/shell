@@ -64,6 +64,12 @@ static char	*get_type(char *cmd, size_t *i)
 	}
 	else if (cmd[*i] == '>' && cmd[ternary((*i) - 1 < 0, 0, (*i) - 1)] != '\\')
 		type = ft_strdup(">");
+	else if (cmd[*i] == '<' && cmd[(*i) + 1] == '<'
+		&& cmd[ternary((*i) - 1 < 0, 0, (*i) - 1)] != '\\')
+	{
+		type = ft_strdup("<<");
+		(*i)++;
+	}
 	else if (cmd[*i] == '<' && cmd[ternary((*i) - 1 < 0, 0, (*i) - 1)] != '\\')
 		type = ft_strdup("<");
 	return (type);

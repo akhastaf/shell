@@ -12,6 +12,26 @@
 
 #include "../../includes/minishell.h"
 
+void	proccess_herdoc(t_cmd *cmd, t_red *red)
+{
+	char *line;
+	int pipeherdoc[2];
+
+	pipe(pipeherdoc);
+	ft_putstr_fd("> ", 2);
+	get_next_line(0, &line);
+	while (ft_strcmp(line, red->file) != 0)
+	{
+		ft_putstr_fd("> ", 2);
+		ft_putendl_fd(line, pipeherdoc[1]);
+		free(line);
+		get_next_line(0, &line);
+	}
+	cmd->fdin = dup(pipeherdoc[0]);
+	close(pipeherdoc[0]);
+	close(pipeherdoc[1]);
+}
+
 static int	file_exist(t_cmd *cmd, char *file)
 {
 	if ((cmd->fdin < 0 || cmd->fdout < 0))
@@ -46,7 +66,9 @@ void	setup_redirection(t_cmd *cmd)
 	cmd->fdin = 0;
 	while (red)
 	{
-		if (red && ((t_red *)red->data)->type[0] == '<')
+		if (red && !ft_strcmp(((t_red *)red->data)->type, "<<"))
+			proccess_herdoc(cmd, red->data);
+		else if (red && ((t_red *)red->data)->type[0] == '<' && ft_strcmp(((t_red *)red->data)->type, "<<"))
 			cmd->fdin = open(((t_red *)red->data)->file, get_option(red->data),
 					S_IRWXU);
 		if (red && ((t_red *)red->data)->type[0] == '>')
@@ -62,3 +84,4 @@ void	setup_redirection(t_cmd *cmd)
 	if (cmd->fdin)
 		dup2(cmd->fdin, 0);
 }
+

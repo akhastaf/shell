@@ -27,8 +27,10 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <signal.h>
-
+# define ULIMIT 1025
+# define BUFFER_SIZE 32
 t_sh		g_sh;
+int		    get_next_line(int fd, char **line);
 void		init_sh(char **env);
 void		init_env(char **env);
 void		init_builtins(void);

@@ -41,6 +41,7 @@ SRC = ./srcs/builtins/cd.c \
 		./srcs/execution/execute.c \
 		./srcs/execution/execute_builtins.c \
 		./srcs/execution/magic_box.c \
+		./srcs/gnl/get_next_line.c \
 		./srcs/gnl/history.c \
 		./srcs/gnl/readline.c \
 		./srcs/gnl/setup_term.c \
